@@ -54,3 +54,15 @@ C:\Users\Sylvie\Documents\Visual Studio 2017\Projects\Mon_M2L - Etudiant\MaisonD
 C:\Users\Sylvie\Documents\Visual Studio 2017\Projects\Mon_M2L - Etudiant\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.csproj.GenerateResource.Cache
 C:\Users\Sylvie\Documents\Visual Studio 2017\Projects\Mon_M2L - Etudiant\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.exe
 C:\Users\Sylvie\Documents\Visual Studio 2017\Projects\Mon_M2L - Etudiant\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.pdb
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\MaisonDesLigues.exe.config
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.exe
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.pdb
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\MaisonDesLigues.exe
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\MaisonDesLigues.pdb
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\ComposantNuite.dll
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\ComposantNuite.pdb
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.csprojResolveAssemblyReference.cache
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.FrmLogin.resources
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.FrmPrincipale.resources
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.Properties.Resources.resources
+C:\Users\jordan.lacroix\Documents\2eme année\PPE\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.csproj.GenerateResource.Cache
