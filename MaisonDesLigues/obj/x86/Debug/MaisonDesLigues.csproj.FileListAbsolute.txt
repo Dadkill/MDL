@@ -90,3 +90,4 @@ C:\Users\valentin.elallam\Documents\mld\MaisonDesLigues\obj\x86\Debug\MaisonDesL
 C:\Users\valentin.elallam\Documents\mld\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.csproj.GenerateResource.Cache
 C:\Users\valentin.elallam\Documents\mld\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.exe
 C:\Users\valentin.elallam\Documents\mld\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.pdb
+C:\Users\valentin.elallam\Documents\2eme année\Projet\MaisonDesLigues\bin\Debug\MaisonDesLigues.exe.config
