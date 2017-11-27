@@ -46,7 +46,7 @@ namespace MaisonDesLigues
         /// <param name="UnContainer">panel ou groupbox</param> 
         /// <param name="unNom">nom de la groupbox à créer</param> 
         /// <param name="UnTop">positionnement haut dans le container  </param> 
-        /// <param name="UnLeft">positionnement bas dans le container </param>    
+        /// <param name="UnLeft">positionnement bas dans le container </param>
         public static void CreerCombo(ScrollableControl UnContainer, String unNom, Int16 UnTop, Int16 UnLeft)
         {
             CheckBox UneCheckBox= new CheckBox();
@@ -120,6 +120,7 @@ namespace MaisonDesLigues
         /// </summary>
         /// <param name="UnControl"> le container sur lequel on va compter les controles de type checkbox qui sont checked</param>
         /// <returns>nombre  de checkbox cochées</returns>
+
         internal static int CompteChecked(ScrollableControl UnContainer)
         {
             Int16 i = 0;
@@ -131,6 +132,15 @@ namespace MaisonDesLigues
                 }
             }
             return i;
+        }
+
+        internal static void resetTextbox (GroupBox maGroupBox)
+        {
+            foreach (Control Unctrl in maGroupBox.Controls)
+            {
+                if (Unctrl is TextBox)
+                    Unctrl.Text = "";
+            }
         }
     }
 }

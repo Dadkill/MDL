@@ -273,8 +273,51 @@ namespace BaseDeDonnees
         /// <param name="pDateBenevolat">collection des id des dates où le bénévole sera présent</param>
         public void InscrireBenevole(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, DateTime pDateNaissance, Int64? pNumeroLicence, Collection<Int16> pDateBenevolat)
         {
+            /// <remarks>
+            /// procédure qui va créer :
+            /// 1- un enregistrement dans la table participant avec typeParticipant à 'B'
+            ///  en cas d'erreurSQL, appel à la méthode GetMessageSql dont le rôle est d'extraire uniquement le message renvoyé
+            /// par une procédure ou un trigger SQLSERVER
+            /// </remarks>
+            /// 
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSnouvelintervenant", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bdd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on appelle la procédure ParamCommunsNouveauxParticipants pour charger les paramètres communs aux Participants
+                this.ParamCommunsNouveauxParticipants(UneSqlCommand, pNom, pPrenom, pAdresse1, pAdresse2, pCp, pVille, pTel, pMail);
+                // on complète les paramètres spécifiques à l'intervenant
+                this.UneSqlCommand.Parameters.Add("@ptype", SqlDbType.VarChar).Value = "B";   // "I" pour le type du participant (Intervenant)
+                this.UneSqlCommand.Parameters.Add("@pDateNaissance", SqlDbType.Date).Value = pDateNaissance;
+                this.UneSqlCommand.Parameters.Add("@pNumeroLicence", SqlDbType.Int).Value = pNumeroLicence;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
 
-
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
         }
 
     }

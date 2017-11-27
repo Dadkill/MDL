@@ -43,11 +43,11 @@
             this.RadBenevole = new System.Windows.Forms.RadioButton();
             this.RadIntervenant = new System.Windows.Forms.RadioButton();
             this.GrpIdentite = new System.Windows.Forms.GroupBox();
+            this.TxtCp = new System.Windows.Forms.TextBox();
             this.TxtMail = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtTel = new System.Windows.Forms.MaskedTextBox();
-            this.TxtCp = new System.Windows.Forms.MaskedTextBox();
             this.TxtVille = new System.Windows.Forms.TextBox();
             this.TxtAdr2 = new System.Windows.Forms.TextBox();
             this.TxtAdr1 = new System.Windows.Forms.TextBox();
@@ -227,11 +227,11 @@
             // 
             // GrpIdentite
             // 
+            this.GrpIdentite.Controls.Add(this.TxtCp);
             this.GrpIdentite.Controls.Add(this.TxtMail);
             this.GrpIdentite.Controls.Add(this.label7);
             this.GrpIdentite.Controls.Add(this.label6);
             this.GrpIdentite.Controls.Add(this.txtTel);
-            this.GrpIdentite.Controls.Add(this.TxtCp);
             this.GrpIdentite.Controls.Add(this.TxtVille);
             this.GrpIdentite.Controls.Add(this.TxtAdr2);
             this.GrpIdentite.Controls.Add(this.TxtAdr1);
@@ -248,6 +248,16 @@
             this.GrpIdentite.TabIndex = 17;
             this.GrpIdentite.TabStop = false;
             this.GrpIdentite.Text = "Identité";
+            // 
+            // TxtCp
+            // 
+            this.TxtCp.Location = new System.Drawing.Point(77, 107);
+            this.TxtCp.MaxLength = 5;
+            this.TxtCp.Name = "TxtCp";
+            this.TxtCp.Size = new System.Drawing.Size(100, 20);
+            this.TxtCp.TabIndex = 17;
+            this.TxtCp.Text = "13012";
+            this.TxtCp.TextChanged += new System.EventHandler(this.TxtCp_TextChanged);
             // 
             // TxtMail
             // 
@@ -284,18 +294,9 @@
             this.txtTel.Size = new System.Drawing.Size(100, 20);
             this.txtTel.TabIndex = 13;
             // 
-            // TxtCp
-            // 
-            this.TxtCp.Location = new System.Drawing.Point(87, 107);
-            this.TxtCp.Mask = "00000";
-            this.TxtCp.Name = "TxtCp";
-            this.TxtCp.Size = new System.Drawing.Size(90, 20);
-            this.TxtCp.TabIndex = 12;
-            this.TxtCp.Text = "69300";
-            // 
             // TxtVille
             // 
-            this.TxtVille.Location = new System.Drawing.Point(232, 104);
+            this.TxtVille.Location = new System.Drawing.Point(232, 107);
             this.TxtVille.Name = "TxtVille";
             this.TxtVille.Size = new System.Drawing.Size(189, 20);
             this.TxtVille.TabIndex = 11;
@@ -537,7 +538,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.MaskedTextBox txtTel;
-        private System.Windows.Forms.MaskedTextBox TxtCp;
         private System.Windows.Forms.TextBox TxtVille;
         private System.Windows.Forms.TextBox TxtAdr2;
         private System.Windows.Forms.TextBox TxtAdr1;
@@ -559,6 +559,7 @@
         private System.Windows.Forms.ComboBox CmbAtelierIntervenant;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TabControl TabPrincipal;
+        private System.Windows.Forms.TextBox TxtCp;
 
 
     }

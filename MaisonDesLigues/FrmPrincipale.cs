@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Collections.ObjectModel;
 using ComposantNuite;
 using BaseDeDonnees;
+
 namespace MaisonDesLigues
 {
     public partial class FrmPrincipale : Form
@@ -121,7 +122,7 @@ namespace MaisonDesLigues
         }
         /// <summary>
         /// Permet d'intercepter le click sur le bouton d'enregistrement d'un bénévole.
-        /// Cetteméthode va appeler la méthode InscrireBenevole de la Bdd, après avoir mis en forme certains paramètres à envoyer.
+        /// Cette méthode va appeler la méthode InscrireBenevole de la Bdd, après avoir mis en forme certains paramètres à envoyer.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -138,7 +139,6 @@ namespace MaisonDesLigues
                 NumeroLicence = null;
             }
 
-
             foreach (Control UnControle in PanelDispoBenevole.Controls)
             {
                 if (UnControle.GetType().Name == "CheckBox" && ((CheckBox)UnControle).Checked)
@@ -152,7 +152,8 @@ namespace MaisonDesLigues
                 }
             }
             UneConnexion.InscrireBenevole(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : null, TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : null, TxtMail.Text != "" ? TxtMail.Text : null, System.Convert.ToDateTime(TxtDateNaissance.Text), NumeroLicence, IdDatesSelectionnees);
-
+            Utilitaire.resetTextbox(GrpIdentite);
+            Utilitaire.resetTextbox(GrpBenevole);
         }
         /// <summary>
         /// Cetet méthode teste les données saisies afin d'activer ou désactiver le bouton d'enregistrement d'un bénévole
@@ -247,8 +248,8 @@ namespace MaisonDesLigues
                       MessageBox.Show("Inscription intervenant sans nuitée effectuée");
                     
                 }
-
-                
+                Utilitaire.resetTextbox(GrpIdentite);
+                Utilitaire.resetTextbox(GrpIntervenant);
             }
             catch (Exception Ex)
             {
@@ -278,6 +279,17 @@ namespace MaisonDesLigues
         private void TxtMail_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void TxtCp_TextChanged(object sender, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(TxtCp.Text, "[^0-9]"))
+            {
+                MessageBox.Show("Veuillez entrer uniquement des nombres pour le code postal.");
+                TxtCp.Text = TxtCp.Text.Remove(TxtCp.Text.Length - 1);
+                TxtCp.SelectionStart = TxtCp.Text.Length; // add some logic if length is 0
+                TxtCp.SelectionLength = 0;
+            }
         }
     }
 }
