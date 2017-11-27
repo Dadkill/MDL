@@ -46,7 +46,7 @@ namespace MaisonDesLigues
         /// <param name="UnContainer">panel ou groupbox</param> 
         /// <param name="unNom">nom de la groupbox à créer</param> 
         /// <param name="UnTop">positionnement haut dans le container  </param> 
-        /// <param name="UnLeft">positionnement bas dans le container </param> 
+        /// <param name="UnLeft">positionnement bas dans le container </param>    
         public static void CreerCombo(ScrollableControl UnContainer, String unNom, Int16 UnTop, Int16 UnLeft)
         {
             CheckBox UneCheckBox= new CheckBox();
