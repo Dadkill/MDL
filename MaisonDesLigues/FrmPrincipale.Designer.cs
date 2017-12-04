@@ -69,6 +69,16 @@
             this.CmbAtelierIntervenant = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
+            this.GrpLicencie = new System.Windows.Forms.GroupBox();
+            this.BtnEnregistrerLicencie = new System.Windows.Forms.Button();
+            this.GrpNuiteLicencie = new System.Windows.Forms.GroupBox();
+            this.PanNuiteLicencie = new System.Windows.Forms.Panel();
+            this.RdbNuiteLicencieNon = new System.Windows.Forms.RadioButton();
+            this.RdbNuiteLicencieOui = new System.Windows.Forms.RadioButton();
+            this.CmbQualiteLicencie = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.TxtLicenceLicencie = new System.Windows.Forms.MaskedTextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.TabInscription.SuspendLayout();
             this.GrpBenevole.SuspendLayout();
             this.GrpTypeParticipant.SuspendLayout();
@@ -77,10 +87,13 @@
             this.GrpIntervenant.SuspendLayout();
             this.GrpNuiteIntervenant.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
+            this.GrpLicencie.SuspendLayout();
+            this.GrpNuiteLicencie.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabInscription
             // 
+            this.TabInscription.Controls.Add(this.GrpLicencie);
             this.TabInscription.Controls.Add(this.GrpBenevole);
             this.TabInscription.Controls.Add(this.CmdQuitter);
             this.TabInscription.Controls.Add(this.GrpTypeParticipant);
@@ -103,7 +116,7 @@
             this.GrpBenevole.Controls.Add(this.label9);
             this.GrpBenevole.Controls.Add(this.label8);
             this.GrpBenevole.Controls.Add(this.TxtDateNaissance);
-            this.GrpBenevole.Location = new System.Drawing.Point(607, 23);
+            this.GrpBenevole.Location = new System.Drawing.Point(618, 6);
             this.GrpBenevole.Name = "GrpBenevole";
             this.GrpBenevole.Size = new System.Drawing.Size(564, 174);
             this.GrpBenevole.TabIndex = 23;
@@ -279,7 +292,7 @@
             // txtTel
             // 
             this.txtTel.Location = new System.Drawing.Point(77, 148);
-            this.txtTel.Mask = "00 00 00 00 00 00";
+            this.txtTel.Mask = "00 00 00 00 00";
             this.txtTel.Name = "txtTel";
             this.txtTel.Size = new System.Drawing.Size(100, 20);
             this.txtTel.TabIndex = 13;
@@ -466,7 +479,7 @@
             // CmbAtelierIntervenant
             // 
             this.CmbAtelierIntervenant.FormattingEnabled = true;
-            this.CmbAtelierIntervenant.Location = new System.Drawing.Point(81, 36);
+            this.CmbAtelierIntervenant.Location = new System.Drawing.Point(69, 29);
             this.CmbAtelierIntervenant.Name = "CmbAtelierIntervenant";
             this.CmbAtelierIntervenant.Size = new System.Drawing.Size(218, 21);
             this.CmbAtelierIntervenant.TabIndex = 26;
@@ -491,6 +504,108 @@
             this.TabPrincipal.Size = new System.Drawing.Size(964, 605);
             this.TabPrincipal.TabIndex = 0;
             // 
+            // GrpLicencie
+            // 
+            this.GrpLicencie.Controls.Add(this.TxtLicenceLicencie);
+            this.GrpLicencie.Controls.Add(this.label11);
+            this.GrpLicencie.Controls.Add(this.BtnEnregistrerLicencie);
+            this.GrpLicencie.Controls.Add(this.GrpNuiteLicencie);
+            this.GrpLicencie.Controls.Add(this.CmbQualiteLicencie);
+            this.GrpLicencie.Controls.Add(this.label10);
+            this.GrpLicencie.Location = new System.Drawing.Point(557, 264);
+            this.GrpLicencie.Name = "GrpLicencie";
+            this.GrpLicencie.Size = new System.Drawing.Size(515, 286);
+            this.GrpLicencie.TabIndex = 26;
+            this.GrpLicencie.TabStop = false;
+            this.GrpLicencie.Text = "Complément Inscription Intervenant";
+            this.GrpLicencie.Visible = false;
+            // 
+            // BtnEnregistrerLicencie
+            // 
+            this.BtnEnregistrerLicencie.Enabled = false;
+            this.BtnEnregistrerLicencie.Location = new System.Drawing.Point(340, 251);
+            this.BtnEnregistrerLicencie.Name = "BtnEnregistrerLicencie";
+            this.BtnEnregistrerLicencie.Size = new System.Drawing.Size(133, 25);
+            this.BtnEnregistrerLicencie.TabIndex = 30;
+            this.BtnEnregistrerLicencie.Text = "Enregistrer";
+            this.BtnEnregistrerLicencie.UseVisualStyleBackColor = true;
+            // 
+            // GrpNuiteLicencie
+            // 
+            this.GrpNuiteLicencie.Controls.Add(this.PanNuiteLicencie);
+            this.GrpNuiteLicencie.Controls.Add(this.RdbNuiteLicencieNon);
+            this.GrpNuiteLicencie.Controls.Add(this.RdbNuiteLicencieOui);
+            this.GrpNuiteLicencie.Location = new System.Drawing.Point(21, 104);
+            this.GrpNuiteLicencie.Name = "GrpNuiteLicencie";
+            this.GrpNuiteLicencie.Size = new System.Drawing.Size(497, 151);
+            this.GrpNuiteLicencie.TabIndex = 29;
+            this.GrpNuiteLicencie.TabStop = false;
+            this.GrpNuiteLicencie.Text = "Nuités";
+            // 
+            // PanNuiteLicencie
+            // 
+            this.PanNuiteLicencie.Location = new System.Drawing.Point(3, 43);
+            this.PanNuiteLicencie.Name = "PanNuiteLicencie";
+            this.PanNuiteLicencie.Size = new System.Drawing.Size(494, 102);
+            this.PanNuiteLicencie.TabIndex = 24;
+            this.PanNuiteLicencie.Visible = false;
+            // 
+            // RdbNuiteLicencieNon
+            // 
+            this.RdbNuiteLicencieNon.AutoSize = true;
+            this.RdbNuiteLicencieNon.Checked = true;
+            this.RdbNuiteLicencieNon.Location = new System.Drawing.Point(92, 15);
+            this.RdbNuiteLicencieNon.Name = "RdbNuiteLicencieNon";
+            this.RdbNuiteLicencieNon.Size = new System.Drawing.Size(45, 17);
+            this.RdbNuiteLicencieNon.TabIndex = 23;
+            this.RdbNuiteLicencieNon.TabStop = true;
+            this.RdbNuiteLicencieNon.Text = "Non";
+            this.RdbNuiteLicencieNon.UseVisualStyleBackColor = true;
+            // 
+            // RdbNuiteLicencieOui
+            // 
+            this.RdbNuiteLicencieOui.AutoSize = true;
+            this.RdbNuiteLicencieOui.Location = new System.Drawing.Point(23, 16);
+            this.RdbNuiteLicencieOui.Name = "RdbNuiteLicencieOui";
+            this.RdbNuiteLicencieOui.Size = new System.Drawing.Size(41, 17);
+            this.RdbNuiteLicencieOui.TabIndex = 22;
+            this.RdbNuiteLicencieOui.Text = "Oui";
+            this.RdbNuiteLicencieOui.UseVisualStyleBackColor = true;
+            // 
+            // CmbQualiteLicencie
+            // 
+            this.CmbQualiteLicencie.FormattingEnabled = true;
+            this.CmbQualiteLicencie.Location = new System.Drawing.Point(126, 29);
+            this.CmbQualiteLicencie.Name = "CmbQualiteLicencie";
+            this.CmbQualiteLicencie.Size = new System.Drawing.Size(150, 21);
+            this.CmbQualiteLicencie.TabIndex = 26;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(18, 32);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(49, 13);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "Qualité : ";
+            // 
+            // TxtLicenceLicencie
+            // 
+            this.TxtLicenceLicencie.Location = new System.Drawing.Point(126, 56);
+            this.TxtLicenceLicencie.Mask = "000000000000";
+            this.TxtLicenceLicencie.Name = "TxtLicenceLicencie";
+            this.TxtLicenceLicencie.Size = new System.Drawing.Size(150, 20);
+            this.TxtLicenceLicencie.TabIndex = 32;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(18, 63);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(105, 13);
+            this.label11.TabIndex = 31;
+            this.label11.Text = "Numéro de licence : ";
+            // 
             // FrmPrincipale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -513,6 +628,10 @@
             this.GrpNuiteIntervenant.ResumeLayout(false);
             this.GrpNuiteIntervenant.PerformLayout();
             this.TabPrincipal.ResumeLayout(false);
+            this.GrpLicencie.ResumeLayout(false);
+            this.GrpLicencie.PerformLayout();
+            this.GrpNuiteLicencie.ResumeLayout(false);
+            this.GrpNuiteLicencie.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -559,7 +678,15 @@
         private System.Windows.Forms.ComboBox CmbAtelierIntervenant;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TabControl TabPrincipal;
-
-
+        private System.Windows.Forms.GroupBox GrpLicencie;
+        private System.Windows.Forms.MaskedTextBox TxtLicenceLicencie;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button BtnEnregistrerLicencie;
+        private System.Windows.Forms.GroupBox GrpNuiteLicencie;
+        private System.Windows.Forms.Panel PanNuiteLicencie;
+        private System.Windows.Forms.RadioButton RdbNuiteLicencieNon;
+        private System.Windows.Forms.RadioButton RdbNuiteLicencieOui;
+        private System.Windows.Forms.ComboBox CmbQualiteLicencie;
+        private System.Windows.Forms.Label label10;
     }
 }

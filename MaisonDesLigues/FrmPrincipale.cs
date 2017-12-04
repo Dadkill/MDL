@@ -109,7 +109,7 @@ namespace MaisonDesLigues
 
         }
         /// <summary>
-        /// permet d'appeler la méthode VerifBtnEnregistreIntervenant qui déterminera le statu du bouton BtnEnregistrerIntervenant
+        /// permet d'appeler la méthode VerifBtnEnregistreIntervenant qui déterminera le statut du bouton BtnEnregistrerIntervenant
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -152,7 +152,8 @@ namespace MaisonDesLigues
                 }
             }
             UneConnexion.InscrireBenevole(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : null, TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : null, TxtMail.Text != "" ? TxtMail.Text : null, System.Convert.ToDateTime(TxtDateNaissance.Text), NumeroLicence, IdDatesSelectionnees);
-
+            Utilitaire.resetTextbox(GrpIdentite);
+            Utilitaire.resetTextbox(GrpBenevole);
         }
         /// <summary>
         /// Cetet méthode teste les données saisies afin d'activer ou désactiver le bouton d'enregistrement d'un bénévole
@@ -239,13 +240,16 @@ namespace MaisonDesLigues
                     {
                         UneConnexion.InscrireIntervenant(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt16(CmbAtelierIntervenant.SelectedValue), this.IdStatutSelectionne, CategoriesSelectionnees, HotelsSelectionnes, NuitsSelectionnes);
                         MessageBox.Show("Inscription intervenant avec nuitées effectuée");
+                        Utilitaire.resetTextbox(GrpIdentite);
+                        Utilitaire.resetTextbox(GrpIntervenant);
                     }
                 }
                 else
                 { // inscription sans les nuitées
                       UneConnexion.InscrireIntervenant(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text :"", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt16(CmbAtelierIntervenant.SelectedValue), this.IdStatutSelectionne);
                       MessageBox.Show("Inscription intervenant sans nuitée effectuée");
-                    
+                      Utilitaire.resetTextbox(GrpIdentite);
+                      Utilitaire.resetTextbox(GrpIntervenant);
                 }
 
                 
@@ -276,6 +280,11 @@ namespace MaisonDesLigues
         }
 
         private void TxtMail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ChkDateBenevole_CheckedChanged(object sender, KeyEventArgs e)
         {
 
         }

@@ -132,5 +132,15 @@ namespace MaisonDesLigues
             }
             return i;
         }
+        internal static void resetTextbox(GroupBox maGroupBox)
+        {
+            foreach (Control Unctrl in maGroupBox.Controls)
+            {
+                if (Unctrl is TextBox)
+                    Unctrl.Text = "";
+                else if (Unctrl is MaskedTextBox)
+                    Unctrl.Text = "";
+            }
+        }
     }
 }
