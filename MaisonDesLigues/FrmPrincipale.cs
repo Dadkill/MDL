@@ -236,7 +236,10 @@ namespace MaisonDesLigues
             GrpLicencie.Left = 23;
             GrpLicencie.Top = 264;
             Utilitaire.RemplirComboBox(UneConnexion, CmbQualiteLicencie, "VQUALITE01");
+            Utilitaire.RemplirListBox(UneConnexion, LsbLicencieChoixAteliers, "VATELIER01");
+            LsbLicencieChoixAteliers.SelectedIndex = -1;
 
+            CmbQualiteLicencie.SelectedIndex = -1;
             CmbQualiteLicencie.Text = "Choisir";
 
         }
@@ -274,13 +277,11 @@ namespace MaisonDesLigues
             {
                 PanNuiteLicencie.Visible = false;
             }
-            BtnEnregistrerLicencie.Enabled = VerifBtnEnregistreLicencie();
         }
 
-        private Boolean VerifBtnEnregistreLicencie()
+        private void VerifBtnEnregistreLicencie()
         {
-            //return CmbAtelierIntervenant.Text != "Choisir" && this.IdStatutSelectionne.Length > 0; //TODO: à compléter
-            return true;
+            BtnEnregistrerLicencie.Enabled = (CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeComplet.MaskCompleted && TxtMontantChequeComplet.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeComplet.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count != 0 || CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeInscription.MaskCompleted && TxtNumeroChequeAccompagnant.MaskCompleted && TxtMontantChequeInscription.Value != 0 && TxtMontantChequeAccompagnant.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeInscription.Text) && !string.IsNullOrEmpty(TxtMontantChequeAccompagnant.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count != 0);
         }
 
         private void RdbPaiementLicencie_CheckedChanged(object sender, EventArgs e)
@@ -294,16 +295,16 @@ namespace MaisonDesLigues
                 TxtNumeroChequeAccompagnant.Enabled = false;
                 TxtNumeroChequeAccompagnant.Text = "";
                 TxtMontantChequeInscription.Enabled = false;
-                TxtMontantChequeInscription.Text = "";
+                TxtMontantChequeInscription.Text = "0";
                 TxtMontantChequeAccompagnant.Enabled = false;
-                TxtMontantChequeAccompagnant.Text = "";
+                TxtMontantChequeAccompagnant.Text = "0";
             }
             else
             {
                 TxtNumeroChequeComplet.Enabled = false;
                 TxtMontantChequeComplet.Enabled = false;
                 TxtNumeroChequeComplet.Text = "";
-                TxtMontantChequeComplet.Text = "";
+                TxtMontantChequeComplet.Text = "0";
                 TxtNumeroChequeInscription.Enabled = true;
                 TxtMontantChequeInscription.Enabled = true;
                 TxtNumeroChequeAccompagnant.Enabled = true;
@@ -396,6 +397,16 @@ namespace MaisonDesLigues
         private void TxtMail_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void CmbQualiteLicencie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            VerifBtnEnregistreLicencie();
+        }
+
+        private void TxtLicenceLicencie_KeyUp(object sender, KeyEventArgs e)
+        {
+            VerifBtnEnregistreLicencie();
         }
     }
 }

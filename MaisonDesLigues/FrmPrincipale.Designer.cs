@@ -33,7 +33,11 @@
             this.GrpLicencie = new System.Windows.Forms.GroupBox();
             this.LsbLicencieChoixAteliers = new System.Windows.Forms.ListBox();
             this.GrpLicencieAccompagnant = new System.Windows.Forms.GroupBox();
-            this.PanReservationAccompagnantLicencie = new System.Windows.Forms.Panel();
+            this.ChkSamediDiner = new System.Windows.Forms.CheckBox();
+            this.ChkDimancheDejeuner = new System.Windows.Forms.CheckBox();
+            this.ChkSamediDejeuner = new System.Windows.Forms.CheckBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.GrpPaiementLicencie = new System.Windows.Forms.GroupBox();
@@ -158,34 +162,78 @@
             // LsbLicencieChoixAteliers
             // 
             this.LsbLicencieChoixAteliers.FormattingEnabled = true;
-            this.LsbLicencieChoixAteliers.Location = new System.Drawing.Point(539, 57);
+            this.LsbLicencieChoixAteliers.Location = new System.Drawing.Point(539, 45);
             this.LsbLicencieChoixAteliers.Name = "LsbLicencieChoixAteliers";
+            this.LsbLicencieChoixAteliers.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.LsbLicencieChoixAteliers.Size = new System.Drawing.Size(183, 121);
             this.LsbLicencieChoixAteliers.TabIndex = 34;
+            this.LsbLicencieChoixAteliers.SelectedIndexChanged += new System.EventHandler(this.CmbQualiteLicencie_SelectedIndexChanged);
             // 
             // GrpLicencieAccompagnant
             // 
-            this.GrpLicencieAccompagnant.Controls.Add(this.PanReservationAccompagnantLicencie);
+            this.GrpLicencieAccompagnant.Controls.Add(this.ChkSamediDiner);
+            this.GrpLicencieAccompagnant.Controls.Add(this.ChkDimancheDejeuner);
+            this.GrpLicencieAccompagnant.Controls.Add(this.ChkSamediDejeuner);
+            this.GrpLicencieAccompagnant.Controls.Add(this.label24);
+            this.GrpLicencieAccompagnant.Controls.Add(this.label23);
             this.GrpLicencieAccompagnant.Controls.Add(this.label22);
             this.GrpLicencieAccompagnant.Controls.Add(this.label21);
-            this.GrpLicencieAccompagnant.Location = new System.Drawing.Point(540, 192);
+            this.GrpLicencieAccompagnant.Location = new System.Drawing.Point(539, 172);
             this.GrpLicencieAccompagnant.Name = "GrpLicencieAccompagnant";
             this.GrpLicencieAccompagnant.Size = new System.Drawing.Size(200, 110);
             this.GrpLicencieAccompagnant.TabIndex = 0;
             this.GrpLicencieAccompagnant.TabStop = false;
             this.GrpLicencieAccompagnant.Text = "Réservation accompagnant(e)";
             // 
-            // PanReservationAccompagnantLicencie
+            // ChkSamediDiner
             // 
-            this.PanReservationAccompagnantLicencie.Location = new System.Drawing.Point(6, 54);
-            this.PanReservationAccompagnantLicencie.Name = "PanReservationAccompagnantLicencie";
-            this.PanReservationAccompagnantLicencie.Size = new System.Drawing.Size(188, 46);
-            this.PanReservationAccompagnantLicencie.TabIndex = 2;
+            this.ChkSamediDiner.AutoSize = true;
+            this.ChkSamediDiner.Location = new System.Drawing.Point(158, 50);
+            this.ChkSamediDiner.Name = "ChkSamediDiner";
+            this.ChkSamediDiner.Size = new System.Drawing.Size(15, 14);
+            this.ChkSamediDiner.TabIndex = 6;
+            this.ChkSamediDiner.UseVisualStyleBackColor = true;
+            // 
+            // ChkDimancheDejeuner
+            // 
+            this.ChkDimancheDejeuner.AutoSize = true;
+            this.ChkDimancheDejeuner.Location = new System.Drawing.Point(82, 73);
+            this.ChkDimancheDejeuner.Name = "ChkDimancheDejeuner";
+            this.ChkDimancheDejeuner.Size = new System.Drawing.Size(15, 14);
+            this.ChkDimancheDejeuner.TabIndex = 5;
+            this.ChkDimancheDejeuner.UseVisualStyleBackColor = true;
+            // 
+            // ChkSamediDejeuner
+            // 
+            this.ChkSamediDejeuner.AutoSize = true;
+            this.ChkSamediDejeuner.Location = new System.Drawing.Point(82, 50);
+            this.ChkSamediDejeuner.Name = "ChkSamediDejeuner";
+            this.ChkSamediDejeuner.Size = new System.Drawing.Size(15, 14);
+            this.ChkSamediDejeuner.TabIndex = 4;
+            this.ChkSamediDejeuner.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(12, 73);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(55, 13);
+            this.label24.TabIndex = 3;
+            this.label24.Text = "Dimanche";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(12, 50);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(42, 13);
+            this.label23.TabIndex = 2;
+            this.label23.Text = "Samedi";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(132, 28);
+            this.label22.Location = new System.Drawing.Point(149, 28);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(34, 13);
             this.label22.TabIndex = 1;
@@ -194,7 +242,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(48, 28);
+            this.label21.Location = new System.Drawing.Point(65, 28);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(50, 13);
             this.label21.TabIndex = 0;
@@ -236,6 +284,8 @@
             this.TxtMontantChequeAccompagnant.Name = "TxtMontantChequeAccompagnant";
             this.TxtMontantChequeAccompagnant.Size = new System.Drawing.Size(100, 20);
             this.TxtMontantChequeAccompagnant.TabIndex = 14;
+            this.TxtMontantChequeAccompagnant.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
+            this.TxtMontantChequeAccompagnant.Leave += new System.EventHandler(this.CmbQualiteLicencie_SelectedIndexChanged);
             // 
             // TxtMontantChequeInscription
             // 
@@ -249,6 +299,8 @@
             this.TxtMontantChequeInscription.Name = "TxtMontantChequeInscription";
             this.TxtMontantChequeInscription.Size = new System.Drawing.Size(100, 20);
             this.TxtMontantChequeInscription.TabIndex = 13;
+            this.TxtMontantChequeInscription.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
+            this.TxtMontantChequeInscription.Leave += new System.EventHandler(this.CmbQualiteLicencie_SelectedIndexChanged);
             // 
             // TxtMontantChequeComplet
             // 
@@ -261,6 +313,8 @@
             this.TxtMontantChequeComplet.Name = "TxtMontantChequeComplet";
             this.TxtMontantChequeComplet.Size = new System.Drawing.Size(100, 20);
             this.TxtMontantChequeComplet.TabIndex = 12;
+            this.TxtMontantChequeComplet.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
+            this.TxtMontantChequeComplet.Leave += new System.EventHandler(this.CmbQualiteLicencie_SelectedIndexChanged);
             // 
             // TxtNumeroChequeAccompagnant
             // 
@@ -270,6 +324,7 @@
             this.TxtNumeroChequeAccompagnant.Name = "TxtNumeroChequeAccompagnant";
             this.TxtNumeroChequeAccompagnant.Size = new System.Drawing.Size(100, 20);
             this.TxtNumeroChequeAccompagnant.TabIndex = 11;
+            this.TxtNumeroChequeAccompagnant.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
             // 
             // TxtNumeroChequeInscription
             // 
@@ -279,6 +334,7 @@
             this.TxtNumeroChequeInscription.Name = "TxtNumeroChequeInscription";
             this.TxtNumeroChequeInscription.Size = new System.Drawing.Size(100, 20);
             this.TxtNumeroChequeInscription.TabIndex = 10;
+            this.TxtNumeroChequeInscription.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
             // 
             // TxtNumeroChequeComplet
             // 
@@ -287,6 +343,7 @@
             this.TxtNumeroChequeComplet.Name = "TxtNumeroChequeComplet";
             this.TxtNumeroChequeComplet.Size = new System.Drawing.Size(100, 20);
             this.TxtNumeroChequeComplet.TabIndex = 9;
+            this.TxtNumeroChequeComplet.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
             // 
             // label20
             // 
@@ -391,6 +448,7 @@
             this.TxtLicenceLicencie.Name = "TxtLicenceLicencie";
             this.TxtLicenceLicencie.Size = new System.Drawing.Size(150, 20);
             this.TxtLicenceLicencie.TabIndex = 32;
+            this.TxtLicenceLicencie.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtLicenceLicencie_KeyUp);
             // 
             // label11
             // 
@@ -463,6 +521,7 @@
             this.CmbQualiteLicencie.Name = "CmbQualiteLicencie";
             this.CmbQualiteLicencie.Size = new System.Drawing.Size(150, 21);
             this.CmbQualiteLicencie.TabIndex = 26;
+            this.CmbQualiteLicencie.SelectedIndexChanged += new System.EventHandler(this.CmbQualiteLicencie_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -977,8 +1036,12 @@
         private System.Windows.Forms.MaskedTextBox TxtNumeroChequeAccompagnant;
         private System.Windows.Forms.MaskedTextBox TxtNumeroChequeInscription;
         private System.Windows.Forms.MaskedTextBox TxtNumeroChequeComplet;
-        private System.Windows.Forms.Panel PanReservationAccompagnantLicencie;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.CheckBox ChkSamediDiner;
+        private System.Windows.Forms.CheckBox ChkDimancheDejeuner;
+        private System.Windows.Forms.CheckBox ChkSamediDejeuner;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
     }
 }

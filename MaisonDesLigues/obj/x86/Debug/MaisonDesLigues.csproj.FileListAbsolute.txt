@@ -102,3 +102,4 @@ C:\Users\Jordan\Desktop\Projets PPE\MDL\MaisonDesLigues\bin\Debug\MaisonDesLigue
 C:\Users\Jordan\Desktop\Projets PPE\MDL\MaisonDesLigues\bin\Debug\ComposantNuite.pdb
 C:\Users\Jordan\Desktop\Projets PPE\MDL\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.exe
 C:\Users\Jordan\Desktop\Projets PPE\MDL\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.pdb
+C:\Users\Jordan\Desktop\Projets PPE\MDL\MaisonDesLigues\bin\Debug\ComposantNuite.dll

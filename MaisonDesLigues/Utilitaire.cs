@@ -114,6 +114,22 @@ namespace MaisonDesLigues
             UneCombo.DisplayMember = "LIBELLE";
             UneCombo.ValueMember = "id";
         }
+
+        /// <summary>
+        /// méthode permettant de remplir une combobox à partir d'une source de données
+        /// </summary>
+        /// <param name="UneConnexion">L'objet connexion à utiliser pour la connexion à la BD</param>
+        /// <param name="UneCombo"> La combobox que l'on doit remplir</param>
+        /// <param name="UneSource">Le nom de la source de données qui va fournir les données. Il s'agit en fait d'une vue de type
+        /// VXXXXOn ou XXXX représente le nom de la table à partir de laquelle la vue est créée. n représente un numéro de séquence</param>
+        public static void RemplirListBox(Bdd UneConnexion, ListBox UneListBox, String UneSource)
+        {
+
+            UneListBox.DataSource = UneConnexion.ObtenirDonnees(UneSource);
+            UneListBox.DisplayMember = "LIBELLE";
+            UneListBox.ValueMember = "id";
+        }
+
         /// <summary>
         /// Cette fonction va compter le nombre de controles types CheckBox qui sont cochées contenus dans la collection controls
         /// du container passé en paramètre
