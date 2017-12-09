@@ -7,7 +7,8 @@ using System.Data.SqlClient;
 using System.Data;
 using BaseDeDonnees;
 using System.Reflection;
-
+using System.Net.Mail;
+using System.Net;
 
 namespace MaisonDesLigues
 {
@@ -157,6 +158,23 @@ namespace MaisonDesLigues
                 else if (Unctrl is MaskedTextBox)
                     Unctrl.Text = "";
             }
+        }
+
+        internal static void envoyerEmail(string userMail, string sujet, string message)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient client = new SmtpClient();
+            mail.To.Add(new MailAddress(userMail));
+            mail.From = new MailAddress("projetppemariecurie@gmail.com");
+            client.EnableSsl = true;
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("projetppemariecurie@gmail.com", "siomariecurie");
+            client.Host = "smtp.gmail.com";
+            mail.Subject = sujet;
+            mail.Body = message;
+            client.Send(mail);
         }
     }
 }

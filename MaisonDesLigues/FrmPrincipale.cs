@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Collections.ObjectModel;
 using ComposantNuite;
 using BaseDeDonnees;
+
 namespace MaisonDesLigues
 {
     public partial class FrmPrincipale : Form
@@ -181,6 +182,10 @@ namespace MaisonDesLigues
                     {
                         UneConnexion.InscrireIntervenant(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt16(CmbAtelierIntervenant.SelectedValue), this.IdStatutSelectionne, CategoriesSelectionnees, HotelsSelectionnes, NuitsSelectionnes);
                         MessageBox.Show("Inscription intervenant avec nuitées effectuée");
+                        if (TxtMail.Text != null)
+                        {
+                            Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant durant l'événement d'escrime.");
+                        }
                         Utilitaire.resetTextbox(GrpIdentite);
                         Utilitaire.resetTextbox(GrpIntervenant);
                     }
@@ -189,11 +194,13 @@ namespace MaisonDesLigues
                 { // inscription sans les nuitées
                     UneConnexion.InscrireIntervenant(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt16(CmbAtelierIntervenant.SelectedValue), this.IdStatutSelectionne);
                     MessageBox.Show("Inscription intervenant sans nuitée effectuée");
+                    if (TxtMail.Text != null)
+                    {
+                        Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant durant l'événement d'escrime.");
+                    }
                     Utilitaire.resetTextbox(GrpIdentite);
                     Utilitaire.resetTextbox(GrpIntervenant);
                 }
-
-
             }
             catch (Exception Ex)
             {
