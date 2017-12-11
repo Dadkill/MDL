@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bdd.cs" />
+    <Compile Include="Cheque.cs" />
     <Compile Include="Utilitaire.cs" />
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>

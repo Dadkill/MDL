@@ -256,6 +256,67 @@ namespace BaseDeDonnees
             return LesDatesARetourner;
 
         }
+
+        /// <summary>
+        /// procédure qui va se charger d'invoquer la procédure stockée qui ira inscrire un participant de type Licencié
+        /// </summary>
+        /// <param name="Cmd">nom de l'objet command concerné par les paramètres</param>
+        /// <param name="pNom">nom du participant</param>
+        /// <param name="pPrenom">prénom du participant</param>
+        /// <param name="pAdresse1">adresse1 du participant</param>
+        /// <param name="pAdresse2">adresse2 du participant</param>
+        /// <param name="pCp">cp du participant</param>
+        /// <param name="pVille">ville du participant</param>
+        /// <param name="pTel">téléphone du participant</param>
+        /// <param name="pMail">mail du participant</param>
+        /// <param name="pDateNaissance">mail du bénévole</param>
+        /// <param name="pNumeroLicence">numéro de licence du bénévole ou null</param>
+        /// <param name="pIdAteliers">collection des id des dates où le bénévole sera présent</param>
+        public void InscrireLicencie(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int64? pIdQualite, Int64? pNumeroLicence, Collection<Int16> pIdAteliers, Collection<Int16> pIdReservationAccompagnant, Collection<Cheque> pMoyenPaiement)
+        {
+            int idLicencie;
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSnouveaulicencie", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on appelle la procédure ParamCommunsNouveauxParticipants pour charger les paramètres communs aux Participants
+                this.ParamCommunsNouveauxParticipants(UneSqlCommand, pNom, pPrenom, pAdresse1, pAdresse2, pCp, pVille, pTel, pMail);
+                // on complète les paramètres spécifiques au bénévole
+                this.UneSqlCommand.Parameters.Add("@ptype", SqlDbType.VarChar).Value = "L";   // "L" pour le type du participant (Licencié)
+                this.UneSqlCommand.Parameters.Add("@pnumerolicence", SqlDbType.VarChar).Value = pNumeroLicence;
+                this.UneSqlCommand.Parameters.Add("@newId", SqlDbType.Int);
+                this.UneSqlCommand.Parameters["@newId"].Direction = ParameterDirection.Output;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+                idLicencie = (int.Parse(UneSqlCommand.Parameters["@newId"].Value.ToString()));
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+
         /// <summary>
         /// procédure qui va se charger d'invoquer la procédure stockée qui ira inscrire un participant de type bénévole
         /// </summary>
