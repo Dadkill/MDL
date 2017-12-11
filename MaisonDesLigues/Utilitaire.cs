@@ -9,6 +9,7 @@ using BaseDeDonnees;
 using System.Reflection;
 using System.Net.Mail;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace MaisonDesLigues
 {
@@ -162,19 +163,34 @@ namespace MaisonDesLigues
 
         internal static void envoyerEmail(string userMail, string sujet, string message)
         {
-            MailMessage mail = new MailMessage();
-            SmtpClient client = new SmtpClient();
-            mail.To.Add(new MailAddress(userMail));
-            mail.From = new MailAddress("projetppemariecurie@gmail.com");
-            client.EnableSsl = true;
-            client.Port = 25;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("projetppemariecurie@gmail.com", "siomariecurie");
-            client.Host = "smtp.gmail.com";
-            mail.Subject = sujet;
-            mail.Body = message;
-            client.Send(mail);
+            string messageErreur = "";
+            try
+            {
+                
+                MailMessage mail = new MailMessage();
+                SmtpClient client = new SmtpClient();
+                mail.To.Add(new MailAddress(userMail));
+                mail.From = new MailAddress("projetppemariecurie@gmail.com");
+                client.EnableSsl = true;
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential("projetppemariecurie@gmail.com", "siomariecurie");
+                client.Host = "smtp.gmail.com";
+                mail.Subject = sujet;
+                mail.Body = message;
+                client.Send(mail);
+            }
+            catch (Exception erreur)
+            {
+                messageErreur = erreur.Message;
+            }
+        }
+
+        internal static bool mailValide(string email)
+        {
+            return Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+
         }
     }
 }

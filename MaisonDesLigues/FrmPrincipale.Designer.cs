@@ -693,7 +693,6 @@
             this.TxtMail.Size = new System.Drawing.Size(189, 20);
             this.TxtMail.TabIndex = 16;
             this.TxtMail.Text = "patrick.dumoulin@slamlmc.fr";
-            this.TxtMail.TextChanged += new System.EventHandler(this.TxtMail_TextChanged);
             // 
             // label7
             // 

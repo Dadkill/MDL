@@ -194,7 +194,7 @@ namespace MaisonDesLigues
                 { // inscription sans les nuitées
                     UneConnexion.InscrireIntervenant(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt16(CmbAtelierIntervenant.SelectedValue), this.IdStatutSelectionne);
                     MessageBox.Show("Inscription intervenant sans nuitée effectuée");
-                    if (TxtMail.Text != null)
+                    if (Utilitaire.mailValide(TxtMail.Text))
                     {
                         Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant durant l'événement d'escrime.");
                     }
@@ -371,7 +371,7 @@ namespace MaisonDesLigues
             }
             else
             {
-                NumeroLicence = null;
+                NumeroLicence = -1;
             }
 
 
@@ -387,7 +387,19 @@ namespace MaisonDesLigues
                     IdDatesSelectionnees.Add(System.Convert.ToInt16((UnControle.Name.Split('_'))[1]));
                 }
             }
-            UneConnexion.InscrireBenevole(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : null, TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : null, TxtMail.Text != "" ? TxtMail.Text : null, System.Convert.ToDateTime(TxtDateNaissance.Text), NumeroLicence, IdDatesSelectionnees);
+            UneConnexion.InscrireBenevole(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToDateTime(TxtDateNaissance.Text), NumeroLicence, IdDatesSelectionnees);
+            if (IdDatesSelectionnees.Count == 1)
+            {
+                MessageBox.Show("Inscription bénévole présent une journée effectuée");
+            }
+            else
+            {
+                MessageBox.Show("Inscription bénévole présent les deux journées effectuée");
+            }
+            if (Utilitaire.mailValide(TxtMail.Text))
+            {
+                Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que bénévole a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que bénévole durant l'événement d'escrime.");
+            }
             Utilitaire.resetTextbox(GrpIdentite);
             Utilitaire.resetTextbox(GrpBenevole);
         }
@@ -399,11 +411,6 @@ namespace MaisonDesLigues
         private void ChkDateBenevole_CheckedChanged(object sender, EventArgs e)
         {
             BtnEnregistreBenevole.Enabled = (TxtLicenceBenevole.Text == "" || TxtLicenceBenevole.MaskCompleted) && TxtDateNaissance.MaskCompleted && Utilitaire.CompteChecked(PanelDispoBenevole) > 0;
-        }
-       
-        private void TxtMail_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void CmbQualiteLicencie_SelectedIndexChanged(object sender, EventArgs e)
