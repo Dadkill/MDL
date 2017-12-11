@@ -273,7 +273,7 @@ namespace BaseDeDonnees
         /// <param name="pDateBenevolat">collection des id des dates où le bénévole sera présent</param>
         public void InscrireBenevole(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, DateTime pDateNaissance, Int64? pNumeroLicence, Collection<Int16> pDateBenevolat)
         {
-            foreach (int monId in pDateBenevolat)
+            foreach (int monId in pDateBenevolat) 
             {
                 String MessageErreur = "";
                 try
@@ -316,6 +316,5 @@ namespace BaseDeDonnees
                 }
             }
         }
-
     }
 }
