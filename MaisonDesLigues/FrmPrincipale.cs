@@ -32,7 +32,70 @@ namespace MaisonDesLigues
             UneConnexion = ((FrmLogin)Owner).UneConnexion;
             TitreApplication = ((FrmLogin)Owner).TitreApplication;
             this.Text = TitreApplication;
+            foreach (GroupBox ungroupbox in tabPage1.Controls) //Miss1 Je rattache tous les boutons a un evenement
+            {  
+                foreach (Control unCtrl in ungroupbox.Controls)
+                {
+                    if (unCtrl is RadioButton)
+                    {
+                        RadioButton unbtnradio = (RadioButton)unCtrl;
+                        if (unbtnradio.Text != "Magie")
+                            unbtnradio.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
+                    }
+                    foreach(Control leCont in unCtrl.Controls)
+                    {
+                        if (leCont is RadioButton)
+                        {
+                            RadioButton unbtnradio2 = (RadioButton)leCont;
+                            if (unbtnradio2.Text != "Magie")
+                                unbtnradio2.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
+                        }
+                    }
+                }
+            }
         }
+
+        private void radioButtons_CheckedChanged(object sender, EventArgs e) //Action a chaque fois qu'un radiobutton est coché
+        {
+            RadioButton radioButton = sender as RadioButton;
+            if (radioButton.Checked == true)
+            {
+                if (radioButton.Name == "radioButton1")
+                {
+                    Organiser(GrpAtelier);
+                    ChangerTailleForm(606, 635);
+                }
+                else if (radioButton.Name == "radioButton2")
+                {
+                    Utilitaire.RemplirComboBox(UneConnexion, comboBox2, "VATELIER01");
+                    Organiser(GrpTheme);
+                    ChangerTailleForm(606, 410);
+                    ChangerPositionGrpBox(32, 136, GrpTheme);
+                }
+               else if (radioButton.Name == "radioButton3")
+                {
+                    Utilitaire.RemplirComboBox(UneConnexion, comboBox3, "VATELIER01");
+                    Organiser(GrpVacation);
+                    ChangerTailleForm(606, 425);
+                    ChangerPositionGrpBox(32, 136, GrpVacation);
+                }
+               else if (radioButton.Name == "radioButton4")
+                {
+                    MagieOptionAjouter.Checked = true;
+                    Organiser(GrpAjouter);
+                    ChangerTailleForm(606, 322);
+                }
+               else if (radioButton.Name == "radioButton5")
+                {
+                    Utilitaire.RemplirComboBox(UneConnexion, comboBox4, "VATELIER01");
+                    Organiser(GrpModifier);
+                    ChangerTailleForm(606, 370);
+                    ChangerPositionGrpBox(15, 121, GrpModifier);
+                }
+            }
+
+        }
+
         /// <summary>
         /// gestion de l'événement click du bouton quitter.
         /// Demande de confirmation avant de quitetr l'application.
@@ -69,6 +132,7 @@ namespace MaisonDesLigues
         /// <summary>     
         /// procédure permettant d'afficher l'interface de saisie du complément d'inscription d'un intervenant.
         /// </summary>
+       
         private void GererInscriptionIntervenant()
         {
 
@@ -108,6 +172,16 @@ namespace MaisonDesLigues
             }
 
 
+        }
+        private void ChangerTailleForm(int x,int y) //Miss1 Methode pour changer la taille de la form avec x en abscisse et y en ordonnée
+        {
+           
+            this.Size = new System.Drawing.Size(x, y);
+            this.CenterToScreen();
+        }
+        private void ChangerPositionGrpBox(int x, int y,GroupBox magrpbox)  //Miss1 Methode pour changer la position de la grpbox passé en paramétre a x en abscisse et y en ordonnée pixel.
+        {
+            magrpbox.Location = new System.Drawing.Point(x, y);
         }
         /// <summary>
         /// permet d'appeler la méthode VerifBtnEnregistreIntervenant qui déterminera le statu du bouton BtnEnregistrerIntervenant
@@ -290,6 +364,52 @@ namespace MaisonDesLigues
                 TxtCp.SelectionStart = TxtCp.Text.Length; // add some logic if length is 0
                 TxtCp.SelectionLength = 0;
             }
+        }
+
+        private void tabPage1_Enter(object sender, EventArgs e)//Miss1
+        {
+
+            ChangerTailleForm(606, 180);
+            MagieOption.Checked = true;
+            MagieOptionAjouter.Checked = true;
+        }
+
+        private void TabInscription_Enter(object sender, EventArgs e)//Miss 1
+        {
+            ChangerTailleForm(666,632);
+        }
+
+        private void Organiser(GroupBox magroupbox) //Miss1 Cache tous les GroupBox autre que celle passé en parametre d'un meme parent
+        {
+            magroupbox.Show();
+
+                foreach (GroupBox unegrb in magroupbox.Parent.Controls)
+                {
+                    if (unegrb.Text != magroupbox.Text && unegrb.Text !="Options")
+                    {
+                        unegrb.Hide();
+                    }
+                }          
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnModifier_Click(object sender, EventArgs e)
+        {
+            UneConnexion.ModifierVacation(int.Parse(comboBox4.SelectedValue.ToString()), int.Parse(comboBox5.SelectedValue.ToString()),DateTime.Parse(textBox9.Text), DateTime.Parse(textBox8.Text));
+        }
+
+        private void BtnAjouterAtelier_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

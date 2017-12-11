@@ -57,7 +57,7 @@
   <ItemGroup>
     <Reference Include="ComposantNuite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Y:\2TSSL\Sylvie Tormento\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\ComposantNuite.dll</HintPath>
+      <HintPath>..\..\..\Desktop\PPE MDL\MaisonDesLigues_etudiants\MaisonDesLigues\bin\Debug\ComposantNuite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

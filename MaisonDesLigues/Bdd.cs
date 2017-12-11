@@ -108,7 +108,7 @@ namespace BaseDeDonnees
             Cmd.Parameters.Add("@pTel", SqlDbType.VarChar).Value = pTel;
             Cmd.Parameters.Add("@pMail", SqlDbType.VarChar).Value = pMail;
         }
-    
+
         /// <summary>
         /// Procédure publique qui va appeler la procédure stockée permettant d'inscrire un nouvel intervenant sans nuité
         /// </summary>
@@ -123,6 +123,83 @@ namespace BaseDeDonnees
         /// <param name="pMail">mail du participant</param>
         /// <param name="pIdAtelier"> Id de l'atelier où interviendra l'intervenant</param>
         /// <param name="pIdStatut">statut de l'intervenant pour l'atelier : animateur ou intervenant ('ANI' ou 'INT')</param>
+        public void CreerAtelier(int idparticipant, string libelle, int nbplacemax)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("creerAtelier", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+
+                UneSqlCommand.Parameters.Add("@idparticipant", SqlDbType.Int).Value = idparticipant;
+                UneSqlCommand.Parameters.Add("@libelleatelier", SqlDbType.VarChar).Value = libelle;
+                UneSqlCommand.Parameters.Add("@NBPLACEMAXI", SqlDbType.Int).Value = nbplacemax;
+
+                UneSqlCommand.ExecuteNonQuery();
+
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+        public void ModifierVacation(int idatelier, int idvacation, DateTime datedebut,DateTime datefin)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("modificationvacations", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+
+                UneSqlCommand.Parameters.Add("@idatelier", SqlDbType.Int).Value = idatelier;
+                UneSqlCommand.Parameters.Add("@idvacation", SqlDbType.Int).Value = idvacation;
+                UneSqlCommand.Parameters.Add("@datedebut", SqlDbType.DateTime).Value = datedebut;
+                UneSqlCommand.Parameters.Add("@datefin", SqlDbType.DateTime).Value = datefin;
+       
+                UneSqlCommand.ExecuteNonQuery();
+      
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
         public void InscrireIntervenant(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int16 pIdAtelier, String pIdStatut)
         {
             /// <remarks>

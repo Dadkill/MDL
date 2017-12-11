@@ -112,7 +112,7 @@ namespace MaisonDesLigues
 
             UneCombo.DataSource = UneConnexion.ObtenirDonnees(UneSource);
             UneCombo.DisplayMember = "LIBELLE";
-            UneCombo.ValueMember = "id";
+            UneCombo.ValueMember = "ID";
         }
         /// <summary>
         /// Cette fonction va compter le nombre de controles types CheckBox qui sont cochées contenus dans la collection controls
