@@ -389,7 +389,7 @@ namespace MaisonDesLigues
                 }
                 else
                 { // inscription sans les nuitées
-                    //UneConnexion.InscrireLicencie(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt64(CmbQualiteLicencie.SelectedValue.ToString()), System.Convert.ToInt64(TxtLicenceLicencie.Text.ToString()), );
+                    UneConnexion.InscrireLicencie(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt64(CmbQualiteLicencie.SelectedValue.ToString()), System.Convert.ToInt64(TxtLicenceLicencie.Text.ToString()), IdAteliers, IdReservationAccompagnant, MoyenPaiement);
                     MessageBox.Show("Inscription licencié sans nuitée effectuée");
                     if (Utilitaire.mailValide(TxtMail.Text))
                     {

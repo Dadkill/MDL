@@ -287,6 +287,7 @@ namespace BaseDeDonnees
                 this.ParamCommunsNouveauxParticipants(UneSqlCommand, pNom, pPrenom, pAdresse1, pAdresse2, pCp, pVille, pTel, pMail);
                 // on complète les paramètres spécifiques au bénévole
                 this.UneSqlCommand.Parameters.Add("@ptype", SqlDbType.VarChar).Value = "L";   // "L" pour le type du participant (Licencié)
+                this.UneSqlCommand.Parameters.Add("@pqualitelicencie", SqlDbType.Int).Value = pIdQualite;
                 this.UneSqlCommand.Parameters.Add("@pnumerolicence", SqlDbType.VarChar).Value = pNumeroLicence;
                 this.UneSqlCommand.Parameters.Add("@newId", SqlDbType.Int);
                 this.UneSqlCommand.Parameters["@newId"].Direction = ParameterDirection.Output;
@@ -295,6 +296,137 @@ namespace BaseDeDonnees
                 // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
                 UneSqlTransaction.Commit();
                 idLicencie = (int.Parse(UneSqlCommand.Parameters["@newId"].Value.ToString()));
+                foreach (int unAtelier in pIdAteliers)
+                {
+                    InscrireLicencie(unAtelier, idLicencie);
+                }
+                foreach (int uneReservation in pIdReservationAccompagnant)
+                {
+                    InclureAccompagnantLicencie(idLicencie, uneReservation);
+                }
+                foreach (Cheque unCheque in pMoyenPaiement)
+                {
+                    PaiementLicencie(idLicencie, unCheque.getMontantCheque(), unCheque.getNumeroCheque(), unCheque.getTypePaiement());
+                }
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+
+        public void InscrireLicencie(int idatelier, int idparticipant)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSinscrire", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on complète les paramètres spécifiques à la table être présent
+                this.UneSqlCommand.Parameters.Add("@idatelier", SqlDbType.Int).Value = idatelier;
+                this.UneSqlCommand.Parameters.Add("@idparticipant", SqlDbType.Int).Value = idparticipant;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+
+        public void InclureAccompagnantLicencie(int idparticipant, int idrestauration)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSinclureaccompagnant", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on complète les paramètres spécifiques à la table être présent
+                this.UneSqlCommand.Parameters.Add("@idparticipant", SqlDbType.Int).Value = idparticipant;
+                this.UneSqlCommand.Parameters.Add("@idrestauration", SqlDbType.Int).Value = idrestauration;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+
+        public void PaiementLicencie(int idparticipant, float montantcheque, string numerocheque, string typepaiement)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSPaiement", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on complète les paramètres spécifiques à la table être présent
+                this.UneSqlCommand.Parameters.Add("@idparticipant", SqlDbType.Int).Value = idparticipant;
+                this.UneSqlCommand.Parameters.Add("@montantcheque", SqlDbType.Float).Value = montantcheque;
+                this.UneSqlCommand.Parameters.Add("@numerocheque", SqlDbType.VarChar).Value = numerocheque;
+                this.UneSqlCommand.Parameters.Add("@typepaiement", SqlDbType.VarChar).Value = typepaiement;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
             }
             catch (SqlException Oex)
             {
