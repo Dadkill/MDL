@@ -33,9 +33,9 @@
             this.GrpLicencie = new System.Windows.Forms.GroupBox();
             this.LsbLicencieChoixAteliers = new System.Windows.Forms.ListBox();
             this.GrpLicencieAccompagnant = new System.Windows.Forms.GroupBox();
-            this.ChkSamediDiner = new System.Windows.Forms.CheckBox();
-            this.ChkDimancheDejeuner = new System.Windows.Forms.CheckBox();
-            this.ChkSamediDejeuner = new System.Windows.Forms.CheckBox();
+            this.Chk_2 = new System.Windows.Forms.CheckBox();
+            this.Chk_3 = new System.Windows.Forms.CheckBox();
+            this.Chk_1 = new System.Windows.Forms.CheckBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
@@ -171,9 +171,9 @@
             // 
             // GrpLicencieAccompagnant
             // 
-            this.GrpLicencieAccompagnant.Controls.Add(this.ChkSamediDiner);
-            this.GrpLicencieAccompagnant.Controls.Add(this.ChkDimancheDejeuner);
-            this.GrpLicencieAccompagnant.Controls.Add(this.ChkSamediDejeuner);
+            this.GrpLicencieAccompagnant.Controls.Add(this.Chk_2);
+            this.GrpLicencieAccompagnant.Controls.Add(this.Chk_3);
+            this.GrpLicencieAccompagnant.Controls.Add(this.Chk_1);
             this.GrpLicencieAccompagnant.Controls.Add(this.label24);
             this.GrpLicencieAccompagnant.Controls.Add(this.label23);
             this.GrpLicencieAccompagnant.Controls.Add(this.label22);
@@ -185,32 +185,32 @@
             this.GrpLicencieAccompagnant.TabStop = false;
             this.GrpLicencieAccompagnant.Text = "Réservation accompagnant(e)";
             // 
-            // ChkSamediDiner
+            // Chk_2
             // 
-            this.ChkSamediDiner.AutoSize = true;
-            this.ChkSamediDiner.Location = new System.Drawing.Point(158, 50);
-            this.ChkSamediDiner.Name = "ChkSamediDiner";
-            this.ChkSamediDiner.Size = new System.Drawing.Size(15, 14);
-            this.ChkSamediDiner.TabIndex = 6;
-            this.ChkSamediDiner.UseVisualStyleBackColor = true;
+            this.Chk_2.AutoSize = true;
+            this.Chk_2.Location = new System.Drawing.Point(158, 50);
+            this.Chk_2.Name = "Chk_2";
+            this.Chk_2.Size = new System.Drawing.Size(15, 14);
+            this.Chk_2.TabIndex = 6;
+            this.Chk_2.UseVisualStyleBackColor = true;
             // 
-            // ChkDimancheDejeuner
+            // Chk_3
             // 
-            this.ChkDimancheDejeuner.AutoSize = true;
-            this.ChkDimancheDejeuner.Location = new System.Drawing.Point(82, 73);
-            this.ChkDimancheDejeuner.Name = "ChkDimancheDejeuner";
-            this.ChkDimancheDejeuner.Size = new System.Drawing.Size(15, 14);
-            this.ChkDimancheDejeuner.TabIndex = 5;
-            this.ChkDimancheDejeuner.UseVisualStyleBackColor = true;
+            this.Chk_3.AutoSize = true;
+            this.Chk_3.Location = new System.Drawing.Point(82, 73);
+            this.Chk_3.Name = "Chk_3";
+            this.Chk_3.Size = new System.Drawing.Size(15, 14);
+            this.Chk_3.TabIndex = 5;
+            this.Chk_3.UseVisualStyleBackColor = true;
             // 
-            // ChkSamediDejeuner
+            // Chk_1
             // 
-            this.ChkSamediDejeuner.AutoSize = true;
-            this.ChkSamediDejeuner.Location = new System.Drawing.Point(82, 50);
-            this.ChkSamediDejeuner.Name = "ChkSamediDejeuner";
-            this.ChkSamediDejeuner.Size = new System.Drawing.Size(15, 14);
-            this.ChkSamediDejeuner.TabIndex = 4;
-            this.ChkSamediDejeuner.UseVisualStyleBackColor = true;
+            this.Chk_1.AutoSize = true;
+            this.Chk_1.Location = new System.Drawing.Point(82, 50);
+            this.Chk_1.Name = "Chk_1";
+            this.Chk_1.Size = new System.Drawing.Size(15, 14);
+            this.Chk_1.TabIndex = 4;
+            this.Chk_1.UseVisualStyleBackColor = true;
             // 
             // label24
             // 
@@ -1037,9 +1037,9 @@
         private System.Windows.Forms.MaskedTextBox TxtNumeroChequeComplet;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.CheckBox ChkSamediDiner;
-        private System.Windows.Forms.CheckBox ChkDimancheDejeuner;
-        private System.Windows.Forms.CheckBox ChkSamediDejeuner;
+        private System.Windows.Forms.CheckBox Chk_2;
+        private System.Windows.Forms.CheckBox Chk_3;
+        private System.Windows.Forms.CheckBox Chk_1;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
     }

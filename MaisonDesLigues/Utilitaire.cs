@@ -126,7 +126,6 @@ namespace MaisonDesLigues
         /// VXXXXOn ou XXXX représente le nom de la table à partir de laquelle la vue est créée. n représente un numéro de séquence</param>
         public static void RemplirListBox(Bdd UneConnexion, ListBox UneListBox, String UneSource)
         {
-
             UneListBox.DataSource = UneConnexion.ObtenirDonnees(UneSource);
             UneListBox.DisplayMember = "LIBELLE";
             UneListBox.ValueMember = "id";

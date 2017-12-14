@@ -288,7 +288,7 @@ namespace MaisonDesLigues
 
         private void VerifBtnEnregistreLicencie()
         {
-            BtnEnregistrerLicencie.Enabled = (CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeComplet.MaskCompleted && TxtMontantChequeComplet.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeComplet.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count != 0 || CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeInscription.MaskCompleted && TxtNumeroChequeAccompagnant.MaskCompleted && TxtMontantChequeInscription.Value != 0 && TxtMontantChequeAccompagnant.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeInscription.Text) && !string.IsNullOrEmpty(TxtMontantChequeAccompagnant.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count != 0);
+            BtnEnregistrerLicencie.Enabled = (CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeComplet.MaskCompleted && TxtMontantChequeComplet.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeComplet.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count >= 1 && LsbLicencieChoixAteliers.SelectedIndices.Count < 6 || CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeInscription.MaskCompleted && TxtNumeroChequeAccompagnant.MaskCompleted && TxtMontantChequeInscription.Value != 0 && TxtMontantChequeAccompagnant.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeInscription.Text) && !string.IsNullOrEmpty(TxtMontantChequeAccompagnant.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count >= 1 && LsbLicencieChoixAteliers.SelectedIndices.Count < 6);
         }
 
         private void RdbPaiementLicencie_CheckedChanged(object sender, EventArgs e)
@@ -323,6 +323,36 @@ namespace MaisonDesLigues
         {
             try
             {
+                Collection<Int64> IdReservationAccompagnant = new Collection<Int64>();
+                Collection<Int64> IdAteliers = new Collection<Int64>();
+                Collection<Cheque> MoyenPaiement = new Collection<Cheque>();
+                foreach (Control unControle in GrpLicencieAccompagnant.Controls)
+                {
+                    if (unControle is CheckBox)
+                    {
+                        CheckBox maCheckbox = (CheckBox)unControle;
+                        if (maCheckbox.Checked)
+                        {
+                            IdReservationAccompagnant.Add(System.Convert.ToInt64(maCheckbox.Name.Substring(4, maCheckbox.Name.Length - 4)));
+                        }
+                    }
+                }
+                foreach (Object unItem in LsbLicencieChoixAteliers.SelectedItems)
+                {
+                    IdAteliers.Add(System.Convert.ToInt64((unItem as DataRowView)["id"].ToString()));
+                }
+                if (RdbPaiementLicencieComplet.Checked)
+                {
+                    Cheque chequeComplet = new Cheque(TxtNumeroChequeComplet.Text, float.Parse(TxtMontantChequeComplet.Text), "Complet");
+                    MoyenPaiement.Add(chequeComplet);
+                }
+                else
+                {
+                    Cheque ChequeInscription = new Cheque(TxtNumeroChequeInscription.Text, float.Parse(TxtNumeroChequeInscription.Text), "Insc");
+                    Cheque ChequeAccompagnant = new Cheque(TxtNumeroChequeAccompagnant.Text, float.Parse(TxtMontantChequeAccompagnant.Text), "Acco");
+                    MoyenPaiement.Add(ChequeInscription);
+                    MoyenPaiement.Add(ChequeAccompagnant);
+                }
                 if (RdbNuiteLicencieOui.Checked)
                 {
                     // inscription avec les nuitées
@@ -359,7 +389,7 @@ namespace MaisonDesLigues
                 }
                 else
                 { // inscription sans les nuitées
-                    UneConnexion.InscrireLicencie(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt64(CmbQualiteLicencie.SelectedValue.ToString()), System.Convert.ToInt64(TxtLicenceLicencie.Text.ToString()), )
+                    //UneConnexion.InscrireLicencie(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt64(CmbQualiteLicencie.SelectedValue.ToString()), System.Convert.ToInt64(TxtLicenceLicencie.Text.ToString()), );
                     MessageBox.Show("Inscription licencié sans nuitée effectuée");
                     if (Utilitaire.mailValide(TxtMail.Text))
                     {

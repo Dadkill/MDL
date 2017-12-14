@@ -272,7 +272,7 @@ namespace BaseDeDonnees
         /// <param name="pDateNaissance">mail du bénévole</param>
         /// <param name="pNumeroLicence">numéro de licence du bénévole ou null</param>
         /// <param name="pIdAteliers">collection des id des dates où le bénévole sera présent</param>
-        public void InscrireLicencie(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int64? pIdQualite, Int64? pNumeroLicence, Collection<Int16> pIdAteliers, Collection<Int16> pIdReservationAccompagnant, Collection<Cheque> pMoyenPaiement)
+        public void InscrireLicencie(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int64? pIdQualite, Int64? pNumeroLicence, Collection<Int64> pIdAteliers, Collection<Int64> pIdReservationAccompagnant, Collection<Cheque> pMoyenPaiement)
         {
             int idLicencie;
             String MessageErreur = "";
