@@ -314,6 +314,7 @@ namespace MaisonDesLigues
                 TxtMontantChequeInscription.Text = "0";
                 TxtMontantChequeAccompagnant.Enabled = false;
                 TxtMontantChequeAccompagnant.Text = "0";
+                VerifBtnEnregistreLicencie();
             }
             else
             {
@@ -325,6 +326,7 @@ namespace MaisonDesLigues
                 TxtMontantChequeInscription.Enabled = true;
                 TxtNumeroChequeAccompagnant.Enabled = true;
                 TxtMontantChequeAccompagnant.Enabled = true;
+                VerifBtnEnregistreLicencie();
             }
         }
 
