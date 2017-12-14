@@ -72,6 +72,11 @@ namespace MaisonDesLigues
             }
         }
 
+        private bool VerifCoordonneesCommunes()
+        {
+            return (TxtNom.Text != "" && TxtPrenom.Text != "" && TxtAdr1.Text != "" && TxtCp.MaskCompleted && TxtVille.Text != "" && txtTel.MaskCompleted || TxtNom.Text != "" && TxtPrenom.Text != "" && TxtAdr1.Text != "" && TxtCp.MaskCompleted && TxtVille.Text != "" && TxtMail.Text != "" && txtTel.Text == "            ");
+        }
+
         //------------------------------------------------------
         //-----------------Choix Intervenant--------------------
         //------------------------------------------------------
@@ -184,10 +189,12 @@ namespace MaisonDesLigues
                         MessageBox.Show("Inscription intervenant avec nuitées effectuée");
                         if (TxtMail.Text != null)
                         {
-                            Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant durant l'événement d'escrime.");
+                            Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant avec nuitées durant l'événement d'escrime.");
                         }
-                        Utilitaire.resetTextbox(GrpIdentite);
-                        Utilitaire.resetTextbox(GrpIntervenant);
+                        Utilitaire.reset(GrpIdentite);
+                        Utilitaire.reset(GrpIntervenant);
+                        Utilitaire.reset(GrpNuiteIntervenant);
+                        Utilitaire.reset(PanNuiteIntervenant);
                     }
                 }
                 else
@@ -196,10 +203,12 @@ namespace MaisonDesLigues
                     MessageBox.Show("Inscription intervenant sans nuitée effectuée");
                     if (Utilitaire.mailValide(TxtMail.Text))
                     {
-                        Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant durant l'événement d'escrime.");
+                        Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant qu'intervenant a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant qu'intervenant sans nuitées durant l'événement d'escrime.");
                     }
-                    Utilitaire.resetTextbox(GrpIdentite);
-                    Utilitaire.resetTextbox(GrpIntervenant);
+                    Utilitaire.reset(GrpIdentite);
+                    Utilitaire.reset(GrpIntervenant);
+                    Utilitaire.reset(GrpNuiteIntervenant);
+                    Utilitaire.reset(PanNuiteIntervenant);
                 }
             }
             catch (Exception Ex)
@@ -225,7 +234,7 @@ namespace MaisonDesLigues
         /// <returns></returns>
         private Boolean VerifBtnEnregistreIntervenant()
         {
-            return CmbAtelierIntervenant.Text != "Choisir" && this.IdStatutSelectionne.Length > 0;
+            return VerifCoordonneesCommunes() && CmbAtelierIntervenant.Text != "Choisir" && this.IdStatutSelectionne.Length > 0;
         }
 
         //------------------------------------------------------
@@ -288,7 +297,7 @@ namespace MaisonDesLigues
 
         private void VerifBtnEnregistreLicencie()
         {
-            BtnEnregistrerLicencie.Enabled = (CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeComplet.MaskCompleted && TxtMontantChequeComplet.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeComplet.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count >= 1 && LsbLicencieChoixAteliers.SelectedIndices.Count < 6 || CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeInscription.MaskCompleted && TxtNumeroChequeAccompagnant.MaskCompleted && TxtMontantChequeInscription.Value != 0 && TxtMontantChequeAccompagnant.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeInscription.Text) && !string.IsNullOrEmpty(TxtMontantChequeAccompagnant.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count >= 1 && LsbLicencieChoixAteliers.SelectedIndices.Count < 6);
+            BtnEnregistrerLicencie.Enabled = (VerifCoordonneesCommunes() && CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeComplet.MaskCompleted && TxtMontantChequeComplet.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeComplet.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count >= 1 && LsbLicencieChoixAteliers.SelectedIndices.Count < 6 || VerifCoordonneesCommunes() && CmbQualiteLicencie.SelectedIndex != -1 && TxtLicenceLicencie.MaskCompleted && TxtNumeroChequeInscription.MaskCompleted && TxtNumeroChequeAccompagnant.MaskCompleted && TxtMontantChequeInscription.Value != 0 && TxtMontantChequeAccompagnant.Value != 0 && !string.IsNullOrEmpty(TxtMontantChequeInscription.Text) && !string.IsNullOrEmpty(TxtMontantChequeAccompagnant.Text) && LsbLicencieChoixAteliers.SelectedIndices.Count >= 1 && LsbLicencieChoixAteliers.SelectedIndices.Count < 6);
         }
 
         private void RdbPaiementLicencie_CheckedChanged(object sender, EventArgs e)
@@ -359,7 +368,7 @@ namespace MaisonDesLigues
                     Collection<Int16> NuitsSelectionnes = new Collection<Int16>();
                     Collection<String> HotelsSelectionnes = new Collection<String>();
                     Collection<String> CategoriesSelectionnees = new Collection<string>();
-                    foreach (Control UnControle in PanNuiteIntervenant.Controls)
+                    foreach (Control UnControle in PanNuiteLicencie.Controls)
                     {
                         if (UnControle.GetType().Name == "ResaNuite" && ((ResaNuite)UnControle).GetNuitSelectionnee())
                         {
@@ -377,14 +386,18 @@ namespace MaisonDesLigues
                     }
                     else
                     {
-                        //UneConnexion.InscrireLicencie(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt16(CmbAtelierIntervenant.SelectedValue), this.IdStatutSelectionne, CategoriesSelectionnees, HotelsSelectionnes, NuitsSelectionnes);
+                        UneConnexion.InscrireLicencie(TxtNom.Text, TxtPrenom.Text, TxtAdr1.Text, TxtAdr2.Text != "" ? TxtAdr2.Text : "", TxtCp.Text, TxtVille.Text, txtTel.MaskCompleted ? txtTel.Text : "", TxtMail.Text != "" ? TxtMail.Text : "", System.Convert.ToInt64(CmbQualiteLicencie.SelectedValue.ToString()), System.Convert.ToInt64(TxtLicenceLicencie.Text.ToString()), IdAteliers, IdReservationAccompagnant, MoyenPaiement, CategoriesSelectionnees, HotelsSelectionnes, NuitsSelectionnes);
                         MessageBox.Show("Inscription licencié avec nuitées effectuée");
                         if (TxtMail.Text != null)
                         {
-                            Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que licencié a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que licencié durant l'événement d'escrime.");
+                            Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que licencié a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que licencié avec nuitées durant l'événement d'escrime.");
                         }
-                        Utilitaire.resetTextbox(GrpIdentite);
-                        Utilitaire.resetTextbox(GrpIntervenant);
+                        Utilitaire.reset(GrpIdentite);
+                        Utilitaire.reset(GrpLicencie);
+                        Utilitaire.reset(GrpLicencieAccompagnant);
+                        Utilitaire.reset(GrpNuiteLicencie);
+                        Utilitaire.reset(PanNuiteLicencie);
+                        Utilitaire.reset(GrpPaiementLicencie);
                     }
                 }
                 else
@@ -393,10 +406,14 @@ namespace MaisonDesLigues
                     MessageBox.Show("Inscription licencié sans nuitée effectuée");
                     if (Utilitaire.mailValide(TxtMail.Text))
                     {
-                        Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que licencié a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que licencié durant l'événement d'escrime.");
+                        Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que licencié a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que licencié sans nuitées durant l'événement d'escrime.");
                     }
-                    Utilitaire.resetTextbox(GrpIdentite);
-                    Utilitaire.resetTextbox(GrpIntervenant);
+                    Utilitaire.reset(GrpIdentite);
+                    Utilitaire.reset(GrpLicencie);
+                    Utilitaire.reset(GrpLicencieAccompagnant);
+                    Utilitaire.reset(GrpNuiteLicencie);
+                    Utilitaire.reset(PanNuiteLicencie);
+                    Utilitaire.reset(GrpPaiementLicencie);
                 }
             }
             catch (Exception Ex)
@@ -472,17 +489,21 @@ namespace MaisonDesLigues
             if (IdDatesSelectionnees.Count == 1)
             {
                 MessageBox.Show("Inscription bénévole présent une journée effectuée");
+                if (Utilitaire.mailValide(TxtMail.Text))
+                {
+                    Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que bénévole a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que bénévole sur une journée durant l'événement d'escrime.");
+                }
             }
             else
             {
                 MessageBox.Show("Inscription bénévole présent les deux journées effectuée");
+                if (Utilitaire.mailValide(TxtMail.Text))
+                {
+                    Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que bénévole a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que bénévole sur les deux journées durant l'événement d'escrime.");
+                }
             }
-            if (Utilitaire.mailValide(TxtMail.Text))
-            {
-                Utilitaire.envoyerEmail(TxtMail.Text.ToString(), "Votre enregistrement en tant que bénévole a été effectué", "Bonjour, ce mail vous est envoyé pour vous confirmer votre inscription en tant que bénévole durant l'événement d'escrime.");
-            }
-            Utilitaire.resetTextbox(GrpIdentite);
-            Utilitaire.resetTextbox(GrpBenevole);
+            Utilitaire.reset(GrpIdentite);
+            Utilitaire.reset(GrpBenevole);
         }
         /// <summary>
         /// Cetet méthode teste les données saisies afin d'activer ou désactiver le bouton d'enregistrement d'un bénévole
@@ -491,7 +512,7 @@ namespace MaisonDesLigues
         /// <param name="e"></param>
         private void ChkDateBenevole_CheckedChanged(object sender, EventArgs e)
         {
-            BtnEnregistreBenevole.Enabled = (TxtLicenceBenevole.Text == "" || TxtLicenceBenevole.MaskCompleted) && TxtDateNaissance.MaskCompleted && Utilitaire.CompteChecked(PanelDispoBenevole) > 0;
+            BtnEnregistreBenevole.Enabled = (VerifCoordonneesCommunes() && TxtLicenceBenevole.Text == "" && TxtDateNaissance.MaskCompleted && Utilitaire.CompteChecked(PanelDispoBenevole) > 0 || VerifCoordonneesCommunes() && TxtLicenceBenevole.MaskCompleted) && TxtDateNaissance.MaskCompleted && Utilitaire.CompteChecked(PanelDispoBenevole) > 0;
         }
 
         private void CmbQualiteLicencie_SelectedIndexChanged(object sender, EventArgs e)
@@ -502,6 +523,16 @@ namespace MaisonDesLigues
         private void TxtLicenceLicencie_KeyUp(object sender, KeyEventArgs e)
         {
             VerifBtnEnregistreLicencie();
+        }
+
+        private void VerifCommune_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (RadIntervenant.Checked)
+                CmbAtelierIntervenant_TextChanged(sender, e);
+            if (RadLicencie.Checked)
+                VerifBtnEnregistreLicencie();
+            if (RadBenevole.Checked)
+                ChkDateBenevole_CheckedChanged(sender, e);
         }
     }
 }

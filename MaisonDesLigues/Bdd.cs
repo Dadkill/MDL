@@ -146,6 +146,8 @@ namespace BaseDeDonnees
                 this.UneSqlCommand.Parameters.Add("@ptype", SqlDbType.VarChar).Value = "I";   // "I" pour le type du participant (Intervenant)
                 this.UneSqlCommand.Parameters.Add("@pidatelierintervenant", SqlDbType.Int).Value = pIdAtelier;
                 this.UneSqlCommand.Parameters.Add("@pIdStatut", SqlDbType.VarChar).Value = pIdStatut;
+                this.UneSqlCommand.Parameters.Add("@newId", SqlDbType.Int);
+                this.UneSqlCommand.Parameters["@newId"].Direction = ParameterDirection.Output;
                 //execution
                 UneSqlCommand.ExecuteNonQuery();
                 // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
@@ -190,55 +192,52 @@ namespace BaseDeDonnees
         /// <param name="pLesNuits">tableau contenant l'id de la date d'arrivée pour chaque nuité à réserver</param>
         public void InscrireIntervenant(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int16 pIdAtelier, String pIdStatut, Collection<string> pLesCategories, Collection<string> pLesHotels, Collection<Int16> pLesNuits)
         {
-            // surcharge de la procédure InscrireIntervenant
-            //    /// <remarks>
-            //    /// procédure qui va  :
-            //    /// 1- faire appel à la procédure stockée PSnouvelintervenant qui insère un enregistrement dans la table participant
-            //    /// 2- va insérer un à 2 enregistrements dans la table CONTENUHEBERGEMENT à l'aide d"une procédure stockée
-            //    /// </remarks>
-            //    /// 
-            // String MessageErreur="";
-            //  try
-            //   {                
+            int idIntervenant;
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSnouvelintervenant", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on appelle la procédure ParamCommunsNouveauxParticipants pour charger les paramètres communs aux Participants
+                this.ParamCommunsNouveauxParticipants(UneSqlCommand, pNom, pPrenom, pAdresse1, pAdresse2, pCp, pVille, pTel, pMail);
+                // on complète les paramètres spécifiques à l'intervenant
+                this.UneSqlCommand.Parameters.Add("@ptype", SqlDbType.VarChar).Value = "I";   // "I" pour le type du participant (Intervenant)
+                this.UneSqlCommand.Parameters.Add("@pidatelierintervenant", SqlDbType.Int).Value = pIdAtelier;
+                this.UneSqlCommand.Parameters.Add("@pIdStatut", SqlDbType.VarChar).Value = pIdStatut;
+                this.UneSqlCommand.Parameters.Add("@newId", SqlDbType.Int);
+                this.UneSqlCommand.Parameters["@newId"].Direction = ParameterDirection.Output;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                idIntervenant = (int.Parse(UneSqlCommand.Parameters["@newId"].Value.ToString()));
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+                for (int i = 0; i < pLesNuits.Count; i++)
+                {
+                    PreciserNuitee(idIntervenant, int.Parse(pLesHotels[i]), int.Parse(pLesCategories[i]), pLesNuits[i]);
+                }
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
 
-            //         UneSqlCommand = new SqlCommand("nouvelintervenant", cn);
-            //           UneSqlCommand.CommandType = CommandType.StoredProcedure;
-            //       // début de la transactionSqlServer : il vaut mieyx gérer les transactions dans l'applicatif que dans la bd.
-            //        UneSqlTransaction = this.cn.BeginTransaction();
-            //         this.ParamCommunsNouveauxParticipants(UneSqlCommand, pNom, pPrenom, pAdresse1, pAdresse2, pCp, pVille, pTel, pMail);
-
-
-            //On va créer ici les paramètres spécifiques à l'inscription d'un intervenant qui réserve des nuits d'hôtel.
-            // Paramètre qui stocke les catégories sélectionnées
-            //.....................
-
-            // Paramètre qui stocke les hotels sélectionnées
-            //...........................
-
-            // Paramètres qui stocke les nuits sélectionnées
-
-            //.......................................         
-            //    }
-            //    catch (SqlException Oex)
-            //    {
-            //        //MessageErreur="Erreur Oracle \n" + this.GetMessageOracle(Oex.Message);
-            //        MessageBox.Show(Oex.Message);
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-            //        MessageErreur= "Autre Erreur, les informations n'ont pas été correctement saisies";
-            //    }
-            //    finally
-            //    {
-            //        if (MessageErreur.Length > 0)
-            //        {
-            //            // annulation de la transaction
-            //            UneSqlTransaction.Rollback();
-            //            // Déclenchement de l'exception
-            //            throw new Exception(MessageErreur);
-            //        }             
-            //    }
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
         }
         /// <summary>
         /// fonction permettant de construire un dictionnaire dont l'id est l'id d'une nuité et le contenu une date
@@ -258,7 +257,7 @@ namespace BaseDeDonnees
         }
 
         /// <summary>
-        /// procédure qui va se charger d'invoquer la procédure stockée qui ira inscrire un participant de type Licencié
+        /// procédure qui va se charger d'invoquer la procédure stockée qui ira inscrire un participant de type Licencié sans nuitées.
         /// </summary>
         /// <param name="Cmd">nom de l'objet command concerné par les paramètres</param>
         /// <param name="pNom">nom du participant</param>
@@ -293,9 +292,9 @@ namespace BaseDeDonnees
                 this.UneSqlCommand.Parameters["@newId"].Direction = ParameterDirection.Output;
                 //execution
                 UneSqlCommand.ExecuteNonQuery();
+                idLicencie = (int.Parse(UneSqlCommand.Parameters["@newId"].Value.ToString()));
                 // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
                 UneSqlTransaction.Commit();
-                idLicencie = (int.Parse(UneSqlCommand.Parameters["@newId"].Value.ToString()));
                 foreach (int unAtelier in pIdAteliers)
                 {
                     InscrireLicencie(unAtelier, idLicencie);
@@ -307,6 +306,84 @@ namespace BaseDeDonnees
                 foreach (Cheque unCheque in pMoyenPaiement)
                 {
                     PaiementLicencie(idLicencie, unCheque.getMontantCheque(), unCheque.getNumeroCheque(), unCheque.getTypePaiement());
+                }
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// procédure qui va se charger d'invoquer la procédure stockée qui ira inscrire un participant de type Licencié avec nuitées.
+        /// </summary>
+        /// <param name="Cmd">nom de l'objet command concerné par les paramètres</param>
+        /// <param name="pNom">nom du participant</param>
+        /// <param name="pPrenom">prénom du participant</param>
+        /// <param name="pAdresse1">adresse1 du participant</param>
+        /// <param name="pAdresse2">adresse2 du participant</param>
+        /// <param name="pCp">cp du participant</param>
+        /// <param name="pVille">ville du participant</param>
+        /// <param name="pTel">téléphone du participant</param>
+        /// <param name="pMail">mail du participant</param>
+        /// <param name="pDateNaissance">mail du bénévole</param>
+        /// <param name="pNumeroLicence">numéro de licence du bénévole ou null</param>
+        /// <param name="pIdAteliers">collection des id des dates où le bénévole sera présent</param>
+        public void InscrireLicencie(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int64? pIdQualite, Int64? pNumeroLicence, Collection<Int64> pIdAteliers, Collection<Int64> pIdReservationAccompagnant, Collection<Cheque> pMoyenPaiement, Collection<string> pLesCategories, Collection<string> pLesHotels, Collection<Int16> pLesNuits)
+        {
+            int idLicencie;
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSnouveaulicencie", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on appelle la procédure ParamCommunsNouveauxParticipants pour charger les paramètres communs aux Participants
+                this.ParamCommunsNouveauxParticipants(UneSqlCommand, pNom, pPrenom, pAdresse1, pAdresse2, pCp, pVille, pTel, pMail);
+                // on complète les paramètres spécifiques au bénévole
+                this.UneSqlCommand.Parameters.Add("@ptype", SqlDbType.VarChar).Value = "L";   // "L" pour le type du participant (Licencié)
+                this.UneSqlCommand.Parameters.Add("@pqualitelicencie", SqlDbType.Int).Value = pIdQualite;
+                this.UneSqlCommand.Parameters.Add("@pnumerolicence", SqlDbType.VarChar).Value = pNumeroLicence;
+                this.UneSqlCommand.Parameters.Add("@newId", SqlDbType.Int);
+                this.UneSqlCommand.Parameters["@newId"].Direction = ParameterDirection.Output;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                idLicencie = (int.Parse(UneSqlCommand.Parameters["@newId"].Value.ToString()));
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+                foreach (int unAtelier in pIdAteliers)
+                {
+                    InscrireLicencie(unAtelier, idLicencie);
+                }
+                foreach (int uneReservation in pIdReservationAccompagnant)
+                {
+                    InclureAccompagnantLicencie(idLicencie, uneReservation);
+                }
+                foreach (Cheque unCheque in pMoyenPaiement)
+                {
+                    PaiementLicencie(idLicencie, unCheque.getMontantCheque(), unCheque.getNumeroCheque(), unCheque.getTypePaiement());
+                }
+                for (int i = 0; i < pLesNuits.Count; i++)
+                {
+                    PreciserNuitee(idLicencie, int.Parse(pLesHotels[i]), int.Parse(pLesCategories[i]), pLesNuits[i]);
                 }
             }
             catch (SqlException Oex)
@@ -423,6 +500,48 @@ namespace BaseDeDonnees
                 this.UneSqlCommand.Parameters.Add("@montantcheque", SqlDbType.Float).Value = montantcheque;
                 this.UneSqlCommand.Parameters.Add("@numerocheque", SqlDbType.VarChar).Value = numerocheque;
                 this.UneSqlCommand.Parameters.Add("@typepaiement", SqlDbType.VarChar).Value = typepaiement;
+                //execution
+                UneSqlCommand.ExecuteNonQuery();
+                // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+
+        public void PreciserNuitee(int idparticipant, int codehotel, int idcategorie, int iddatenuitee)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("PSdetailhebergement", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                // début de la transaction SqlServer il vaut mieux gérer les transactions dans l'applicatif que dans la bd dans les procédures stockées.
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+                // on complète les paramètres spécifiques à la table être présent
+                this.UneSqlCommand.Parameters.Add("@idparticipant", SqlDbType.Int).Value = idparticipant;
+                this.UneSqlCommand.Parameters.Add("@codehotel", SqlDbType.Int).Value = codehotel;
+                this.UneSqlCommand.Parameters.Add("@idcategorie", SqlDbType.Int).Value = idcategorie;
+                this.UneSqlCommand.Parameters.Add("@iddatenuitee", SqlDbType.Int).Value = iddatenuitee;
+                this.UneSqlCommand.Parameters.Add("@numordre", SqlDbType.Int).Value = 0;
                 //execution
                 UneSqlCommand.ExecuteNonQuery();
                 // fin de la transaction. Si on arrive à ce point, c'est qu'aucune exception n'a été levée

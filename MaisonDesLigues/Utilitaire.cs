@@ -149,14 +149,79 @@ namespace MaisonDesLigues
             }
             return i;
         }
-        internal static void resetTextbox(GroupBox maGroupBox)
+        internal static void reset(GroupBox maGroupBox)
         {
             foreach (Control Unctrl in maGroupBox.Controls)
             {
+                CheckBox chkTemp;
+                ComboBox cmbTemp;
+                ListBox lsbTemp;
+                RadioButton rdbTemp;
+
                 if (Unctrl is TextBox)
                     Unctrl.Text = "";
                 else if (Unctrl is MaskedTextBox)
                     Unctrl.Text = "";
+                else if (Unctrl is CheckBox)
+                {
+                    chkTemp = (CheckBox)Unctrl;
+                    chkTemp.Checked = false;
+                }
+                else if (Unctrl is ComboBox)
+                {
+                    cmbTemp = (ComboBox)Unctrl;
+                    cmbTemp.SelectedIndex = -1;
+                }
+                else if (Unctrl is ListBox)
+                {
+                    lsbTemp = (ListBox)Unctrl;
+                    lsbTemp.SelectedItems.Clear();
+                }
+                else if (Unctrl is RadioButton)
+                {
+                    rdbTemp = (RadioButton)Unctrl;
+                    rdbTemp.Checked = false;
+                }
+                else if (Unctrl is NumericUpDown)
+                    Unctrl.Text = "0";
+            }
+        }
+
+        internal static void reset(Panel monPanel)
+        {
+            foreach (Control Unctrl in monPanel.Controls)
+            {
+                CheckBox chkTemp;
+                ComboBox cmbTemp;
+                ListBox lsbTemp;
+                RadioButton rdbTemp;
+
+                if (Unctrl is TextBox)
+                    Unctrl.Text = "";
+                else if (Unctrl is MaskedTextBox)
+                    Unctrl.Text = "";
+                else if (Unctrl is CheckBox)
+                {
+                    chkTemp = (CheckBox)Unctrl;
+                    chkTemp.Checked = false;
+                }
+                else if (Unctrl is ComboBox)
+                {
+                    cmbTemp = (ComboBox)Unctrl;
+                    cmbTemp.SelectedIndex = -1;
+                }
+                else if (Unctrl is ListBox)
+                {
+                    lsbTemp = (ListBox)Unctrl;
+                    lsbTemp.SelectedItems.Clear();
+                }
+                else if (Unctrl is RadioButton)
+                {
+                    rdbTemp = (RadioButton)Unctrl;
+                    rdbTemp.Checked = false;
+                }
+                else if (Unctrl is NumericUpDown)
+                    Unctrl.Text = "0";
             }
         }
 

@@ -693,6 +693,7 @@
             this.TxtMail.Size = new System.Drawing.Size(189, 20);
             this.TxtMail.TabIndex = 16;
             this.TxtMail.Text = "patrick.dumoulin@slamlmc.fr";
+            this.TxtMail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // label7
             // 
@@ -719,6 +720,7 @@
             this.txtTel.Name = "txtTel";
             this.txtTel.Size = new System.Drawing.Size(100, 20);
             this.txtTel.TabIndex = 13;
+            this.txtTel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // TxtCp
             // 
@@ -728,6 +730,7 @@
             this.TxtCp.Size = new System.Drawing.Size(90, 20);
             this.TxtCp.TabIndex = 12;
             this.TxtCp.Text = "69300";
+            this.TxtCp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // TxtVille
             // 
@@ -736,6 +739,7 @@
             this.TxtVille.Size = new System.Drawing.Size(189, 20);
             this.TxtVille.TabIndex = 11;
             this.TxtVille.Text = "Caluire";
+            this.TxtVille.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // TxtAdr2
             // 
@@ -751,6 +755,7 @@
             this.TxtAdr1.Size = new System.Drawing.Size(340, 20);
             this.TxtAdr1.TabIndex = 8;
             this.TxtAdr1.Text = "Avenue du développement";
+            this.TxtAdr1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // TxtPrenom
             // 
@@ -759,6 +764,7 @@
             this.TxtPrenom.Size = new System.Drawing.Size(142, 20);
             this.TxtPrenom.TabIndex = 7;
             this.TxtPrenom.Text = "Patrick";
+            this.TxtPrenom.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // TxtNom
             // 
@@ -767,6 +773,7 @@
             this.TxtNom.Size = new System.Drawing.Size(142, 20);
             this.TxtNom.TabIndex = 6;
             this.TxtNom.Text = "Dumoulin";
+            this.TxtNom.KeyUp += new System.Windows.Forms.KeyEventHandler(this.VerifCommune_KeyUp);
             // 
             // label5
             // 
