@@ -94,7 +94,6 @@ C:\Users\valentin.elallam\Documents\2eme année\Projet\MaisonDesLigues\bin\Debug
 C:\Users\Valentin\Documents\PPE\MaisonDesLigues\bin\Debug\MaisonDesLigues.exe.config
 C:\Users\Valentin\Documents\PPE\MaisonDesLigues\bin\Debug\MaisonDesLigues.exe
 C:\Users\Valentin\Documents\PPE\MaisonDesLigues\bin\Debug\MaisonDesLigues.pdb
-C:\Users\Valentin\Documents\PPE\MaisonDesLigues\bin\Debug\ComposantNuite.dll
 C:\Users\Valentin\Documents\PPE\MaisonDesLigues\bin\Debug\ComposantNuite.pdb
 C:\Users\Valentin\Documents\PPE\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.FrmLogin.resources
 C:\Users\Valentin\Documents\PPE\MaisonDesLigues\obj\x86\Debug\MaisonDesLigues.FrmPrincipale.resources

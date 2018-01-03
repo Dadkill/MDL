@@ -402,7 +402,7 @@ namespace MaisonDesLigues
 
         }
 
-        private void BtnModifier_Click(object sender, EventArgs e)
+        private void BtnModifier_Click(object sender, EventArgs e) //Modification
         {
             UneConnexion.ModifierVacation(int.Parse(comboBox4.SelectedValue.ToString()), int.Parse(comboBox5.SelectedValue.ToString()),DateTime.Parse(textBox9.Text), DateTime.Parse(textBox8.Text));
         }
