@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using ComposantNuite;
 using BaseDeDonnees;
 
+
 namespace MaisonDesLigues
 {
     public partial class FrmPrincipale : Form
@@ -62,6 +63,8 @@ namespace MaisonDesLigues
             {
                 if (radioButton.Name == "radioButton1")
                 {
+                    comboBox1.Items.Clear();
+                    Utilitaire.RemplirComboBoxParticipant(UneConnexion, comboBox1);
                     Organiser(GrpAtelier);
                     ChangerTailleForm(606, 635);
                 }
@@ -88,6 +91,9 @@ namespace MaisonDesLigues
                else if (radioButton.Name == "radioButton5")
                 {
                     Utilitaire.RemplirComboBox(UneConnexion, comboBox4, "VATELIER01");
+                    int selectedValue;
+                    bool parseOK = Int32.TryParse(comboBox4.SelectedValue.ToString(), out selectedValue);
+                    Utilitaire.RemplirVacation(UneConnexion, comboBox5, "VVACATION01", selectedValue);
                     Organiser(GrpModifier);
                     ChangerTailleForm(606, 370);
                     ChangerPositionGrpBox(15, 121, GrpModifier);
@@ -392,24 +398,92 @@ namespace MaisonDesLigues
                 }          
         }
 
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void BtnModifier_Click(object sender, EventArgs e) //Modification
         {
-            UneConnexion.ModifierVacation(int.Parse(comboBox4.SelectedValue.ToString()), int.Parse(comboBox5.SelectedValue.ToString()),DateTime.Parse(textBox9.Text), DateTime.Parse(textBox8.Text));
+            DateTime datedebut, datefin;
+            if (comboBox4.Text == "" || comboBox5.Text == "" || textBox9.Text == "" || textBox8.Text == "" || !DateTime.TryParse(textBox9.Text,out datedebut) || !DateTime.TryParse(textBox8.Text, out datefin))
+            {
+                MessageBox.Show("Veuillez compléter tous les champs demandés avec des valeurs corrects! Il faut aussi choisir un atelier et un participant !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                UneConnexion.ModifierVacation(int.Parse(comboBox4.SelectedValue.ToString()), int.Parse(comboBox5.SelectedValue.ToString()), datedebut, datefin);
+                MessageBox.Show("Vacation Modifié avec succès", "Réussite", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                comboBox4.Text = "";
+                comboBox5.Text = "";
+                textBox9.Text = "";
+                textBox8.Text = "";
+            }
         }
 
         private void BtnAjouterAtelier_Click(object sender, EventArgs e)
         {
-            
+            DateTime datedebut, datefin;
+            if(comboBox1.Text =="" || textBox1.Text == "" || textBox2.Text == "" || !DateTime.TryParse(textBox3.Text, out datedebut) || !DateTime.TryParse(textBox4.Text, out datefin) || numericUpDown1.Value ==0)
+            {
+                MessageBox.Show("Veuillez compléter tous les champs demandés avec des valeurs corrects! Il faut aussi selectionner au moin une place !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                ComboBoxItem maCombo = (ComboBoxItem)comboBox1.Items[comboBox1.SelectedIndex];
+                UneConnexion.AjoutAtelier(int.Parse(maCombo.getId()), textBox1.Text, int.Parse(numericUpDown1.Value.ToString()), textBox2.Text, datedebut, datefin);
+                MessageBox.Show("Atelier ajouté avec succès", "Réussite", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                comboBox1.Text = "";
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                numericUpDown1.Value = 0;
+            }                
         }
+
+        private void BtnAjouterTheme_Click(object sender, EventArgs e)
+        {
+           if(textBox5.Text == "" || comboBox2.Text=="")
+            {
+                MessageBox.Show("Entrer un thème et choisissez un atelier!","Erreur", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+           else
+            {
+               UneConnexion.CompleterThemeAtelier(int.Parse(comboBox2.SelectedValue.ToString()), textBox5.Text);
+                MessageBox.Show("Thème ajouté avec succès", "Réussite", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox5.Text ="";
+                comboBox2.Text = "";
+            }
+        }
+
+        private void BtnAjouterVacation_Click(object sender, EventArgs e)
+        {
+            DateTime datedebut, datefin;
+            if (!DateTime.TryParse(textBox6.Text, out datedebut) || !DateTime.TryParse(textBox7.Text, out datefin) || comboBox3.Text == "")
+            {
+                MessageBox.Show("Entrer les heures de début et de fin et choisissez un atelier vec des valeurs corrects!", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                UneConnexion.CompleterVacationAtelier(int.Parse(comboBox2.SelectedValue.ToString()), datedebut, datefin);
+                MessageBox.Show("Vacation ajouté avec succès", "Réussite", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBox6.Text = "";
+                textBox7.Text = "";
+                comboBox3.Text = "";
+            }
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox4.Text != "")
+            {
+                int selectedValue;
+                bool parseOK = Int32.TryParse(comboBox4.SelectedValue.ToString(), out selectedValue);
+                Utilitaire.RemplirVacation(UneConnexion, comboBox5, "VVACATION01", selectedValue);
+            }
+        }
+
     }
 }

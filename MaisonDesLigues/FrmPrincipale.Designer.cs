@@ -618,6 +618,7 @@
             // comboBox5
             // 
             this.comboBox5.DisplayMember = "1";
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Location = new System.Drawing.Point(155, 66);
             this.comboBox5.Name = "comboBox5";
@@ -659,6 +660,7 @@
             // 
             // comboBox4
             // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Items.AddRange(new object[] {
             "Aucun"});
@@ -666,6 +668,7 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(188, 24);
             this.comboBox4.TabIndex = 16;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // label22
             // 
@@ -737,7 +740,6 @@
             this.radioButton2.TabIndex = 1;
             this.radioButton2.Text = "Theme";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton1
             // 
@@ -748,6 +750,7 @@
             this.radioButton1.TabIndex = 0;
             this.radioButton1.Text = "Atelier";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // GrpAtelier
             // 
@@ -871,6 +874,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(127, 17);
             this.comboBox1.Name = "comboBox1";
@@ -935,9 +939,11 @@
             this.BtnAjouterVacation.TabIndex = 17;
             this.BtnAjouterVacation.Text = "Valider";
             this.BtnAjouterVacation.UseVisualStyleBackColor = true;
+            this.BtnAjouterVacation.Click += new System.EventHandler(this.BtnAjouterVacation_Click);
             // 
             // comboBox3
             // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Location = new System.Drawing.Point(140, 16);
             this.comboBox3.Name = "comboBox3";
@@ -1007,6 +1013,7 @@
             this.BtnAjouterTheme.TabIndex = 16;
             this.BtnAjouterTheme.Text = "Valider";
             this.BtnAjouterTheme.UseVisualStyleBackColor = true;
+            this.BtnAjouterTheme.Click += new System.EventHandler(this.BtnAjouterTheme_Click);
             // 
             // textBox5
             // 
@@ -1026,6 +1033,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(129, 20);
             this.comboBox2.Name = "comboBox2";
@@ -1076,7 +1084,6 @@
             this.radioButton5.TabIndex = 1;
             this.radioButton5.Text = "Modifier une vacation existante";
             this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
             // 
             // radioButton4
             // 

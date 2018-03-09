@@ -8,7 +8,6 @@ using System.Data;
 using BaseDeDonnees;
 using System.Reflection;
 
-
 namespace MaisonDesLigues
 {
     internal abstract class Utilitaire
@@ -109,10 +108,24 @@ namespace MaisonDesLigues
         /// VXXXXOn ou XXXX représente le nom de la tabl à partir de laquelle la vue est créée. n représente un numéro de séquence</param>
         public static void RemplirComboBox(Bdd UneConnexion, ComboBox UneCombo, String UneSource)
         {
-
             UneCombo.DataSource = UneConnexion.ObtenirDonnees(UneSource);
             UneCombo.DisplayMember = "LIBELLE";
             UneCombo.ValueMember = "ID";
+        }
+        public static void RemplirVacation(Bdd UneConnexion, ComboBox UneCombo, String UneSource,int unatelier)
+        {
+            UneCombo.DataSource = UneConnexion.ObtenirVacationAtelier(unatelier);
+           UneCombo.DisplayMember = "IDVACATION";
+            UneCombo.ValueMember = "IDVACATION";
+        }
+        public static void RemplirComboBoxParticipant(Bdd UneConnexion, ComboBox UneCombo)
+        {
+            DataTable dt = UneConnexion.ObtenirParticipant();
+            foreach (DataRow row in dt.Rows)
+            {
+                UneCombo.Items.Add(new ComboBoxItem(row["NOM"] + " " + row["PRENOM"], row["ID"].ToString(), row["MAIL"].ToString(), row["NOM"].ToString(), row["PRENOM"].ToString()));
+            }
+
         }
         /// <summary>
         /// Cette fonction va compter le nombre de controles types CheckBox qui sont cochées contenus dans la collection controls

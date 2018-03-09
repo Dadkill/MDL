@@ -77,12 +77,19 @@ namespace BaseDeDonnees
         /// <returns>un objet de type datatable contenant les données récupérées</returns>
         public DataTable ObtenirDonnees(String UneTableOuVue)
         {
-            string Sql = "select * from " + UneTableOuVue;
-            this.UneSqlCommand = new SqlCommand(Sql, cn);
-            UnSqlDataAdapter = new SqlDataAdapter();
-            UnSqlDataAdapter.SelectCommand = this.UneSqlCommand;
-            UneDataTable = new DataTable();
-            UnSqlDataAdapter.Fill(UneDataTable);
+            try
+            {
+                string Sql = "select * from " + UneTableOuVue;
+                this.UneSqlCommand = new SqlCommand(Sql, cn);
+                UnSqlDataAdapter = new SqlDataAdapter();
+                UnSqlDataAdapter.SelectCommand = this.UneSqlCommand;
+                UneDataTable = new DataTable();
+                UnSqlDataAdapter.Fill(UneDataTable);
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show(exe.Message);
+            }
             return UneDataTable;
         }
         /// <summary>
@@ -161,6 +168,79 @@ namespace BaseDeDonnees
                 }
             }
         }
+        public void AjouterVacation(DateTime datedebut, DateTime datefin)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("ajoutvacation", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+
+                UneSqlCommand.Parameters.Add("@dateheuredebut", SqlDbType.DateTime).Value = datedebut;
+                UneSqlCommand.Parameters.Add("@dateheurefin", SqlDbType.DateTime).Value = datefin;
+
+                UneSqlCommand.ExecuteNonQuery();
+
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+        public void AjouterTheme(string libelle)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("ajouttheme", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+
+                UneSqlCommand.Parameters.Add("@libelletheme", SqlDbType.VarChar).Value = libelle;
+
+                UneSqlCommand.ExecuteNonQuery();
+
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
         public void ModifierVacation(int idatelier, int idvacation, DateTime datedebut,DateTime datefin)
         {
             String MessageErreur = "";
@@ -199,6 +279,42 @@ namespace BaseDeDonnees
                     throw new Exception(MessageErreur);
                 }
             }
+        }
+        public DataTable ObtenirParticipant()
+        {
+            try
+            {
+                string Sql = "select * FROM VPARTICIPANT";
+                this.UneSqlCommand = new SqlCommand(Sql, cn);
+                UnSqlDataAdapter = new SqlDataAdapter();
+                UnSqlDataAdapter.SelectCommand = this.UneSqlCommand;
+                UneDataTable = new DataTable();
+                UnSqlDataAdapter.Fill(UneDataTable);
+            }
+            catch(Exception exe)
+            {
+                MessageBox.Show(exe.Message);
+            }
+            return UneDataTable;
+        }
+
+        public DataTable ObtenirVacationAtelier(int idatelier)
+        {
+            try
+            {
+                string Sql = "select IDVACATION FROM VVACATION01 WHERE IDATELIER=@IDATELIER";
+            this.UneSqlCommand = new SqlCommand(Sql, cn);
+            UneSqlCommand.Parameters.Add("@IDATELIER", SqlDbType.Int).Value = idatelier;
+            UnSqlDataAdapter = new SqlDataAdapter();
+            UnSqlDataAdapter.SelectCommand = this.UneSqlCommand;
+            UneDataTable = new DataTable();
+            UnSqlDataAdapter.Fill(UneDataTable);
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show(exe.Message);
+            }
+            return UneDataTable;
         }
         public void InscrireIntervenant(String pNom, String pPrenom, String pAdresse1, String pAdresse2, String pCp, String pVille, String pTel, String pMail, Int16 pIdAtelier, String pIdStatut)
         {
@@ -332,6 +448,97 @@ namespace BaseDeDonnees
             }
             return LesDatesARetourner;
 
+        }
+        public void AjoutAtelier(int idparticipant, string libelleatelier, int nbplacemax,string libelletheme,DateTime Heuredebut,DateTime HeureFin)
+        {
+            String MessageErreur = "";
+            try
+            {
+                CreerAtelier(idparticipant, libelleatelier, nbplacemax);
+                AjouterTheme(libelletheme);
+                AjouterVacation(Heuredebut, HeureFin);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+
+        }
+        public void CompleterVacationAtelier(int idatelier,DateTime datedebut,DateTime datefin)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("completethemeatelier", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+
+                UneSqlCommand.Parameters.Add("@idatelier", SqlDbType.Int).Value = idatelier;
+                UneSqlCommand.Parameters.Add("@datedebut", SqlDbType.DateTime).Value = datedebut;
+                UneSqlCommand.Parameters.Add("@datefin", SqlDbType.DateTime).Value = datefin;
+
+                UneSqlCommand.ExecuteNonQuery();
+
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
+        }
+        public void CompleterThemeAtelier(int idatelier, string libelle)
+        {
+            String MessageErreur = "";
+            try
+            {
+                UneSqlCommand = new SqlCommand("completethemeatelier", cn);
+                UneSqlCommand.CommandType = CommandType.StoredProcedure;
+                UneSqlTransaction = this.cn.BeginTransaction();
+                this.UneSqlCommand.Transaction = UneSqlTransaction;
+
+                UneSqlCommand.Parameters.Add("@idatelier", SqlDbType.Int).Value = idatelier;
+                UneSqlCommand.Parameters.Add("@libelletheme", SqlDbType.VarChar).Value = libelle;
+
+                UneSqlCommand.ExecuteNonQuery();
+
+                UneSqlTransaction.Commit();
+            }
+            catch (SqlException Oex)
+            {
+                MessageErreur = "Erreur SqlServer \n" + this.GetMessageSql(Oex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                MessageErreur = ex.Message + "Autre Erreur, les informations n'ont pas été correctement saisies";
+            }
+            finally
+            {
+                if (MessageErreur.Length > 0)
+                {
+                    // annulation de la transaction
+                    UneSqlTransaction.Rollback();
+                    // Déclenchement de l'exception
+                    throw new Exception(MessageErreur);
+                }
+            }
         }
         /// <summary>
         /// procédure qui va se charger d'invoquer la procédure stockée qui ira inscrire un participant de type bénévole
